@@ -1,0 +1,7 @@
+# Q22: Named list and updating a field
+employee <- list(name = "Arun", id = 101, salary = 45000, department = "IT")
+cat("Original Employee Record:\n"); print(employee)
+
+employee$salary <- 52000
+cat("\nAfter updating salary:\n"); print(employee)
+cat("\nUpdated salary:", employee$salary, "\n")

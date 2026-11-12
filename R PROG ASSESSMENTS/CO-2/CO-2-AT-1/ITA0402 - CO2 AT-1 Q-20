@@ -1,0 +1,10 @@
+# Q20: AND, OR, NOT, XOR on logical vectors
+a <- c(TRUE, TRUE, FALSE, FALSE, TRUE)
+b <- c(TRUE, FALSE, TRUE, FALSE, FALSE)
+
+result <- data.frame(A = a, B = b,
+                     AND   = a & b,
+                     OR    = a | b,
+                     NOT_A = !a,
+                     XOR   = xor(a, b))
+print(result)

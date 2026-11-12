@@ -1,0 +1,12 @@
+"seq","attempts","loop_passes","unread","evals_v1","evals_v2"
+"S1_valid_first",1,1,0,5,3
+"S2_invalid_valid",2,2,0,10,8
+"S3a_low_endpoint",1,1,0,5,3
+"S3b_high_endpoint",1,1,0,5,3
+"S3c_edges_then_ok",3,3,0,14,12
+"S4_alternating",2,2,2,8,7
+"S5a_repeat_bad",3,4,1,6,11
+"S5b_missing_only",2,3,0,2,6
+"S6_empty",0,1,0,0,0
+"S7_duplicates",1,1,2,5,3
+"S8_limit_numeric",3,4,1,12,13

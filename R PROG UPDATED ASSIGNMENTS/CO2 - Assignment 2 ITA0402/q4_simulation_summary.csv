@@ -1,0 +1,10 @@
+"invalid_rate","evals_per_attempt_v1","evals_per_attempt_v2","outcomes_identical"
+0,5,3,TRUE
+0.05,4.904,3.047,TRUE
+0.1,4.8,3.093,TRUE
+0.2,4.594,3.189,TRUE
+0.4,4.191,3.371,TRUE
+0.6,3.802,3.579,TRUE
+0.8,3.356,3.759,TRUE
+0.9,3.159,3.863,TRUE
+0.95,3.061,3.908,TRUE

@@ -1,0 +1,39 @@
+# Q4: Melting and Casting with reshape2 (duplicate IDs -> need fun.aggregate)
+if (!requireNamespace("reshape2", quietly = TRUE)) install.packages("reshape2")  # one-time install
+library(reshape2)
+set.seed(11)
+perf <- data.frame(Timestamp = rep(1:4, each = 2),          # 2 readings per timestamp
+                   Bitrate   = rep(c("Low", "High"), times = 4),
+                   Sensor1   = round(rnorm(8, 50, 5), 1),
+                   Sensor2   = round(rnorm(8, 60, 6), 1),
+                   Sensor3   = round(rnorm(8, 70, 7), 1))
+cat("Original performance matrix (duplicate Timestamps):\n"); print(perf)
+
+molten <- melt(perf, id.vars = c("Timestamp", "Bitrate"),
+               variable.name = "Sensor", value.name = "Reading")
+cat("\nMolten data (first 6 of", nrow(molten), "rows):\n"); print(head(molten, 6))
+
+cat("\nTimestamp x Sensor combinations that occur more than once:\n")
+print(table(molten$Timestamp, molten$Sensor))
+
+# dcast WITHOUT fun.aggregate
+cat("\ndcast() without fun.aggregate:\n")
+no_agg <- withCallingHandlers(dcast(molten, Timestamp ~ Sensor, value.var = "Reading"),
+            message = function(m) { cat("   Message:", conditionMessage(m)); invokeRestart("muffleMessage") },
+            warning = function(w) { cat("   Warning:", conditionMessage(w), "\n"); invokeRestart("muffleWarning") })
+print(no_agg)
+
+# dcast with explicit aggregation: mean and variance
+mean_wide <- dcast(molten, Timestamp ~ Sensor, value.var = "Reading", fun.aggregate = mean)
+var_wide  <- dcast(molten, Timestamp ~ Sensor, value.var = "Reading", fun.aggregate = var)
+names(mean_wide)[-1] <- paste0(names(mean_wide)[-1], "_mean")
+names(var_wide)[-1]  <- paste0(names(var_wide)[-1],  "_var")
+combined <- merge(mean_wide, var_wide, by = "Timestamp")
+cat("\nWide format with mean AND variance preserved:\n"); print(round(combined, 3))
+
+# single-call version: add a Statistic dimension before casting
+stats <- do.call(rbind, lapply(c(mean = mean, var = var), function(f)
+  aggregate(Reading ~ Timestamp + Sensor, data = molten, FUN = f)))
+stats$Statistic <- rep(c("mean", "var"), each = nrow(stats) / 2)
+cat("\nSingle dcast over Sensor + Statistic:\n")
+print(round(dcast(stats, Timestamp ~ Sensor + Statistic, value.var = "Reading"), 3))

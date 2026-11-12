@@ -1,0 +1,23 @@
+# Q2: Employee Salary Processing (Data Frame)
+emp <- data.frame(
+  EmpID     = 101:108,
+  Name      = c("Arun","Priya","Kumar","Divya","Rahul","Sneha","Vikram","Meena"),
+  BasicPay  = c(30000, 45000, 28000, 52000, 38000, 60000, 25000, 41000),
+  Allowance = c(8000, 12000, 6000, 15000, 9000, 18000, 5000, 10000)
+)
+emp$GrossSalary <- emp$BasicPay + emp$Allowance
+cat("Employee Data with Gross Salary:\n"); print(emp)
+
+cat("\nEmployees earning above Rs.50,000:\n")
+print(emp[emp$GrossSalary > 50000, c("EmpID","Name","GrossSalary")])
+
+cat("\nEmployee with Highest Salary:\n")
+print(emp[which.max(emp$GrossSalary), c("EmpID","Name","GrossSalary")])
+
+cat("\n----- SUMMARY REPORT -----\n")
+cat("Total Employees      :", nrow(emp), "\n")
+cat("Total Salary Payout  :", sum(emp$GrossSalary), "\n")
+cat("Average Gross Salary :", mean(emp$GrossSalary), "\n")
+cat("Highest Gross Salary :", max(emp$GrossSalary), "\n")
+cat("Lowest Gross Salary  :", min(emp$GrossSalary), "\n")
+cat("Employees above 50000:", sum(emp$GrossSalary > 50000), "\n")

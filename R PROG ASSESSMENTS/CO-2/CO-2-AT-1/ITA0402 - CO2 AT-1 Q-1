@@ -1,0 +1,12 @@
+# Q1: Basic data types and their class
+num_var  <- 25.5
+int_var  <- 10L
+chr_var  <- "R Programming"
+lgl_var  <- TRUE
+cplx_var <- 3 + 4i
+
+vars <- list(Numeric = num_var, Integer = int_var, Character = chr_var,
+             Logical = lgl_var, Complex = cplx_var)
+for (nm in names(vars)) {
+  cat(nm, "variable:", format(vars[[nm]]), "-> class:", class(vars[[nm]]), "\n")
+}

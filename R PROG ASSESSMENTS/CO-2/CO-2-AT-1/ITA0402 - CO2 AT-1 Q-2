@@ -1,0 +1,7 @@
+# Q2: List access
+my_list <- list(numbers = c(10, 20, 30, 40),
+                mat     = matrix(1:6, nrow = 2),
+                text    = "Hello R")
+cat("Vector element:\n");  print(my_list$numbers)
+cat("\nMatrix element:\n"); print(my_list[["mat"]])
+cat("\nString element:\n"); print(my_list[[3]])

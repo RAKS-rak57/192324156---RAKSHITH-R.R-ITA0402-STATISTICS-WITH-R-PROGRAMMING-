@@ -1,0 +1,23 @@
+# Q1: Student Performance Analysis (Matrix)
+marks <- matrix(c(78,85,72, 92,88,95, 65,70,68, 81,79,84, 55,62,58,
+                  90,94,89, 73,68,77, 86,91,82, 60,58,64, 95,97,93),
+                nrow = 10, ncol = 3, byrow = TRUE,
+                dimnames = list(paste0("Student", 1:10),
+                                c("Maths", "Physics", "Chemistry")))
+cat("Marks Matrix:\n"); print(marks)
+
+cat("\nSubject-wise Averages:\n"); print(colMeans(marks))
+
+cat("\nHighest and Lowest Scorer in Each Subject:\n")
+for (sub in colnames(marks)) {
+  hi <- rownames(marks)[which.max(marks[, sub])]
+  lo <- rownames(marks)[which.min(marks[, sub])]
+  cat(sub, "-> Highest:", hi, "(", max(marks[, sub]), ")",
+      "| Lowest:", lo, "(", min(marks[, sub]), ")\n")
+}
+
+overall_avg <- mean(marks)
+cat("\nOverall Average:", round(overall_avg, 2), "\n")
+student_avg <- rowMeans(marks)
+cat("Students scoring above overall average:\n")
+print(round(student_avg[student_avg > overall_avg], 2))

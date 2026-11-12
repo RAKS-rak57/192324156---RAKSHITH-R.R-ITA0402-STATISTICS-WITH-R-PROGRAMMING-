@@ -1,0 +1,37 @@
+# Q2: Working with Data Frames - clean "ERR_99" tokens in Temperature
+set.seed(7)
+temp <- round(rnorm(30, mean = 75, sd = 8), 2)
+temp_chr <- as.character(temp)
+temp_chr[c(4, 11, 12, 25, 29)] <- "ERR_99"
+df <- data.frame(Reading = 1:30, Temperature = temp_chr, stringsAsFactors = FALSE)
+cat("Column class before cleaning:", class(df$Temperature), "\n")
+print(head(df, 6))
+
+# --- Impact of the string tokens ---
+cat("\n[1] mean() on the character column:\n")
+m <- withCallingHandlers(mean(df$Temperature, na.rm = TRUE),
+       warning = function(w) { cat("   Warning:", conditionMessage(w), "\n"); invokeRestart("muffleWarning") })
+cat("   Result:", m, "\n")
+
+cat("\n[2] Subsetting Temperature > 100 on the character column:\n")
+cat("   Rows returned:", nrow(df[df$Temperature > 100, ]),
+    "(text is compared alphabetically, so '93.3' > '100' is TRUE)\n")
+
+# --- Wrangling script ---
+num_try  <- suppressWarnings(as.numeric(df$Temperature))
+bad_idx  <- which(is.na(num_try) & !is.na(df$Temperature))   # non-numeric tokens
+tokens   <- df$Temperature[bad_idx]
+
+cat("\nRow indices of non-numeric tokens:", bad_idx, "\n")
+cat("Token frequency:\n"); print(table(tokens))
+
+df$Temperature[bad_idx] <- NA                       # explicit NA
+df$Temperature <- as.numeric(df$Temperature)        # safe type-cast to double
+
+cat("\nColumn class after cleaning:", class(df$Temperature), "\n")
+cat("Valid numeric records kept :", sum(!is.na(df$Temperature)), "of", nrow(df), "\n")
+cat("Records replaced with NA   :", sum(is.na(df$Temperature)), "\n")
+cat("Original values preserved  :", all.equal(df$Temperature[-bad_idx], temp[-bad_idx]), "\n")
+cat("Mean Temperature (na.rm=TRUE):", round(mean(df$Temperature, na.rm = TRUE), 3), "\n")
+cat("Rows with Temperature > 85  :", nrow(df[which(df$Temperature > 85), ]), "\n")
+str(df)

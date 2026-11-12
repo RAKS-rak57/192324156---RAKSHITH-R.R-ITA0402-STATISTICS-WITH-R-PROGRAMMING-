@@ -1,0 +1,48 @@
+# Q7: Chi-square test of independence (Membership Status vs Product Category)
+# ---- Dataset (simulated retail data; same block in every question) ----
+set.seed(123); n <- 200
+cats <- c("Electronics","Clothing","Groceries","Home Decor","Beauty")
+Customer_ID       <- paste0("C", 1001:(1000 + n))
+Gender            <- sample(c("Male","Female"), n, replace = TRUE)
+Age               <- sample(18:65, n, replace = TRUE)
+City              <- sample(c("Chennai","Mumbai","Delhi","Bengaluru","Hyderabad"), n, replace = TRUE)
+Membership_Status <- sample(c("Premium","Regular"), n, replace = TRUE, prob = c(0.4, 0.6))
+Store_Type        <- sample(c("Urban","Semi-Urban","Rural"), n, replace = TRUE, prob = c(0.4, 0.3, 0.3))
+Monthly_Income    <- round(pmax(15000, rnorm(n, 45000, 12000)), -2)
+Purchase_Amount   <- 0.04 * Monthly_Income * exp(rnorm(n, 0, 0.45)) *
+                     ifelse(Gender == "Male", 1.2, 1) * ifelse(Membership_Status == "Premium", 1.1, 1)
+Purchase_Amount   <- round(Purchase_Amount / 50) * 50
+Customer_Rating   <- 3.4 + ifelse(Membership_Status == "Premium", 0.4, 0) +
+                     ifelse(Store_Type == "Urban", 0.25, ifelse(Store_Type == "Rural", -0.25, 0)) + rnorm(n, 0, 0.8)
+Customer_Rating   <- round(pmin(5, pmax(1, Customer_Rating)), 1)
+Product_Category  <- ifelse(Membership_Status == "Premium",
+                            sample(cats, n, TRUE, prob = c(0.30, 0.25, 0.10, 0.15, 0.20)),
+                            sample(cats, n, TRUE, prob = c(0.15, 0.20, 0.35, 0.15, 0.15)))
+df <- data.frame(Customer_ID, Gender, Age, City, Product_Category, Purchase_Amount,
+                 Monthly_Income, Customer_Rating, Membership_Status, Store_Type)
+# ---- Analysis ----
+cat("H0: Membership Status and Product Category are independent\n")
+cat("H1: Membership Status and Product Category are associated\n")
+cat("Significance level (alpha) = 0.05\n")
+
+obs <- table(df$Membership_Status, df$Product_Category)
+cat("\nContingency table (observed counts):\n"); print(obs)
+cat("\nRow percentages (preference within each membership type):\n")
+print(round(prop.table(obs, 1) * 100, 1))
+
+test <- chisq.test(obs)
+cat("\nChi-square test result:\n"); print(test)
+cat("\nExpected counts:\n"); print(round(test$expected, 2))
+cat("All expected counts >= 5:", all(test$expected >= 5), "\n")
+
+cramers_v <- sqrt(as.numeric(test$statistic) / (sum(obs) * (min(dim(obs)) - 1)))
+cat("Cramer's V (strength of association):", round(cramers_v, 3), "\n")
+
+if (test$p.value < 0.05) {
+  cat("Decision: p < 0.05 -> Reject H0. Membership Status and Product Category are associated.\n")
+} else {
+  cat("Decision: p >= 0.05 -> Fail to reject H0. No significant association found.\n")
+}
+barplot(t(prop.table(obs, 1)), beside = TRUE, legend.text = TRUE,
+        col = c("gold","tomato","seagreen","orchid","skyblue"),
+        main = "Product Category Preference by Membership", ylab = "Proportion")

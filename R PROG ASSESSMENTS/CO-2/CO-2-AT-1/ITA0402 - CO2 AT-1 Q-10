@@ -1,0 +1,8 @@
+# Q10: Looping over a non-vector set (list of mixed data types)
+mixed_list <- list(42L, 3.14, "R Language", TRUE, c(1, 2, 3), 2 + 3i)
+
+for (i in seq_along(mixed_list)) {
+  item <- mixed_list[[i]]
+  cat("Element", i, ":", paste(item, collapse = ", "),
+      "| Type:", typeof(item), "| Class:", class(item), "\n")
+}

@@ -1,0 +1,11 @@
+# Q9: Simple interest with default argument values
+simple_interest <- function(principal = 1000, rate = 5, time = 2) {
+  si <- (principal * rate * time) / 100
+  return(si)
+}
+
+cat("Without any argument (all defaults)  :", simple_interest(), "\n")
+cat("Only principal passed (5000)         :", simple_interest(5000), "\n")
+cat("Principal and rate passed (5000, 8)  :", simple_interest(5000, 8), "\n")
+cat("All arguments passed (5000, 8, 3)    :", simple_interest(5000, 8, 3), "\n")
+cat("Using named arguments (time=4)       :", simple_interest(principal = 2000, time = 4), "\n")

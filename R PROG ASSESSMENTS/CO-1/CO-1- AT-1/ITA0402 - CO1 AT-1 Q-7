@@ -1,0 +1,15 @@
+# Q7: Voting Eligibility System (Logical Vectors)
+name <- c("Arun","Priya","Kumar","Divya","Rahul","Sneha","Vikram","Meena","Ravi","Anita")
+age  <- c(25, 17, 18, 16, 45, 30, 15, 22, 17, 60)
+citizens <- data.frame(Name = name, Age = age)
+
+eligible <- citizens$Age >= 18
+citizens$Eligible <- eligible
+cat("Voting Eligibility Table:\n"); print(citizens)
+
+cat("\nEligible Voters  :", sum(eligible), "\n")
+cat("Ineligible Voters:", sum(!eligible), "\n")
+pct <- (sum(eligible) / length(eligible)) * 100
+cat("Percentage of Eligible Voters:", pct, "%\n")
+
+cat("\nEligible Names:", citizens$Name[eligible], "\n")

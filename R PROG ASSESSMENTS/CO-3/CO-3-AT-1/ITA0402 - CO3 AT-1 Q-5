@@ -1,0 +1,59 @@
+# Q5: Merging data frames with clock drift (interval matching + outer merge)
+set.seed(2026)
+base  <- as.POSIXct("2026-01-01 08:00:00", tz = "UTC")
+grid  <- expand.grid(SystemID = paste0("SYS", 1:5), Slot = 0:9, stringsAsFactors = FALSE)
+df_control <- data.frame(SystemID = grid$SystemID,
+                         Timestamp = base + grid$Slot * 30,
+                         Status = sample(c("OK", "FAIL"), 50, TRUE, prob = c(0.85, 0.15)),
+                         stringsAsFactors = FALSE)
+
+# telemetry: same events, but failures always drift by 1-2 s, OK events drift 40% of the time
+tel_status <- ifelse(df_control$Status == "OK", "OK", "ERROR")
+drift <- ifelse(tel_status == "ERROR", sample(c(-2, -1, 1, 2), 50, TRUE),
+                ifelse(runif(50) < 0.6, 0, sample(c(-2, -1, 1, 2), 50, TRUE)))
+df_telemetry <- data.frame(SystemID = df_control$SystemID,
+                           Timestamp = df_control$Timestamp + drift,
+                           Status = tel_status, stringsAsFactors = FALSE)
+# orphan logs: 3 telemetry error logs with no control record, 2 control rows with no telemetry
+df_telemetry <- rbind(df_telemetry,
+  data.frame(SystemID = c("SYS1","SYS3","SYS5"), Timestamp = base + c(1000, 1100, 1200),
+             Status = "ERROR", stringsAsFactors = FALSE))
+df_control <- rbind(df_control,
+  data.frame(SystemID = c("SYS2","SYS4"), Timestamp = base + c(2000, 2100),
+             Status = "OK", stringsAsFactors = FALSE))
+df_telemetry <- df_telemetry[-c(1, 2), ]          # two telemetry rows genuinely missing
+cat("Control rows:", nrow(df_control), " Telemetry rows:", nrow(df_telemetry), "\n")
+
+# 1) Standard merge on exact keys: conflicting Status names + data loss
+exact <- merge(df_control, df_telemetry, by = c("SystemID", "Timestamp"))
+cat("\nExact-key inner merge columns:", names(exact), "\n")
+cat("Rows kept:", nrow(exact), "of", nrow(df_telemetry), "telemetry rows ->",
+    round(100 * (1 - nrow(exact) / nrow(df_telemetry)), 1), "% lost\n")
+
+# 2) Interval matching: pair each telemetry row with the nearest control row (same system, +/- 2 s)
+df_control$Control_Row <- seq_len(nrow(df_control))
+match_idx <- sapply(seq_len(nrow(df_telemetry)), function(i) {
+  gap  <- abs(as.numeric(difftime(df_control$Timestamp, df_telemetry$Timestamp[i], units = "secs")))
+  cand <- which(df_control$SystemID == df_telemetry$SystemID[i] & gap <= 2)
+  if (length(cand) == 0) NA_integer_ else cand[which.min(gap[cand])]
+})
+df_telemetry$Control_Row <- match_idx
+
+merged <- merge(df_control, df_telemetry, by = c("SystemID", "Control_Row"),
+                all = TRUE, suffixes = c("_control", "_telemetry"))
+merged$Drift_sec <- as.numeric(difftime(merged$Timestamp_telemetry, merged$Timestamp_control, units = "secs"))
+merged$Match <- ifelse(is.na(merged$Timestamp_telemetry), "Control only",
+                ifelse(is.na(merged$Timestamp_control), "Telemetry only (orphan)", "Matched"))
+
+cat("\nMerged columns:", names(merged), "\n")
+cat("\nMatch summary after interval matching + outer merge:\n"); print(table(merged$Match))
+cat("\nDrift (seconds) among matched rows:\n"); print(table(merged$Drift_sec))
+cat("\nOrphan telemetry error logs preserved:\n")
+print(merged[merged$Match == "Telemetry only (orphan)", c("SystemID","Timestamp_telemetry","Status_telemetry")])
+
+# 3) Effect on the reliability estimate (share of OK telemetry records)
+rel_exact <- mean(exact$Status.y == "OK")
+rel_full  <- mean(df_telemetry$Status == "OK")
+cat("\nReliability from exact-key inner merge :", round(100 * rel_exact, 1), "%\n")
+cat("Reliability from interval + outer merge:", round(100 * rel_full, 1), "%\n")
+cat("Bias introduced by dropping records     :", round(100 * (rel_exact - rel_full), 1), "percentage points\n")

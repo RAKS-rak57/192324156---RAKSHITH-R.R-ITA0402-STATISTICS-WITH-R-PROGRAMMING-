@@ -1,0 +1,8 @@
+# Q24: Uppercase, lowercase and character count
+student_names <- c("Arun", "priya", "Kumar", "DIVYA", "Rahul")
+
+result <- data.frame(Name      = student_names,
+                     Uppercase = toupper(student_names),
+                     Lowercase = tolower(student_names),
+                     Length    = nchar(student_names))
+print(result)

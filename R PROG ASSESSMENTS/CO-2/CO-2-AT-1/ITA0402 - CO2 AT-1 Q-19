@@ -1,0 +1,13 @@
+# Q19: Atomic vector operations
+v <- c(12, 45, 7, 23, 89, 34, 56, 2, 67, 41)
+cat("Vector:", v, "\n")
+cat("Sum                :", sum(v), "\n")
+cat("Mean               :", mean(v), "\n")
+cat("Maximum / Minimum  :", max(v), "/", min(v), "\n")
+cat("Sorted (ascending) :", sort(v), "\n")
+cat("Sorted (descending):", sort(v, decreasing = TRUE), "\n")
+cat("Reversed           :", rev(v), "\n")
+cat("3rd element        :", v[3], "\n")
+cat("Elements 2 to 5    :", v[2:5], "\n")
+cat("Elements > 40      :", v[v > 40], "\n")
+cat("Length             :", length(v), "\n")

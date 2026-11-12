@@ -1,0 +1,22 @@
+# Q8: Matrix-Based Sales Analysis
+sales <- matrix(c(25000, 30000, 28000,
+                  40000, 35000, 45000,
+                  15000, 20000, 18000,
+                  32000, 28000, 36000),
+                nrow = 4, ncol = 3, byrow = TRUE,
+                dimnames = list(c("Product A","Product B","Product C","Product D"),
+                                c("North","South","East")))
+cat("Sales Matrix:\n"); print(sales)
+
+product_total <- rowSums(sales)
+region_total  <- colSums(sales)
+cat("\nProduct-wise Total Sales:\n"); print(product_total)
+cat("\nRegion-wise Total Sales:\n");  print(region_total)
+
+best_product <- names(which.max(product_total))
+cat("\nBest-Performing Product:", best_product,
+    "with sales of", max(product_total), "\n")
+
+best_region <- names(which.max(region_total))
+cat("Region with Maximum Sales:", best_region,
+    "with sales of", max(region_total), "\n")

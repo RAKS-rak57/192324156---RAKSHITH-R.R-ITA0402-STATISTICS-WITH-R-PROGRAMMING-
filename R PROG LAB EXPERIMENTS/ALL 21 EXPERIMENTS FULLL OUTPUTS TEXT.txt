@@ -1,0 +1,2133 @@
+
+R version 4.6.1 (2026-06-24 ucrt) -- "Happy Hop"
+Copyright (C) 2026 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> 
+> num_vec <- c(10, 20.5, 30, 40)
+> chr_vec <- c("R", "Python", "Java")
+> log_vec <- c(TRUE, FALSE, TRUE)
+> 
+> cat("Numeric vector   :", num_vec, "\n")
+Numeric vector   : 10 20.5 30 40 
+> cat("Type:", typeof(num_vec), "| Class:", class(num_vec), "\n\n")
+Type: double | Class: numeric 
+
+> 
+> cat("Character vector :", chr_vec, "\n")
+Character vector : R Python Java 
+> cat("Type:", typeof(chr_vec), "| Class:", class(chr_vec), "\n\n")
+Type: character | Class: character 
+
+> 
+> cat("Logical vector   :", log_vec, "\n")
+Logical vector   : TRUE FALSE TRUE 
+> 
+Type: logical | Class: logical 
+> 
+> # 5 x 4 matrix filled BY ROW
+> m1 <- matrix(1:20, nrow = 5, ncol = 4, byrow = TRUE,
++              dimnames = list(c("R1","R2","R3","R4","R5"),
++                              c("C1","C2","C3","C4")))
+> print("5 x 4 matrix (filled by row):")
+[1] "5 x 4 matrix (filled by row):"
+> print(m1)
+   C1 C2 C3 C4
+R1  1  2  3  4
+R2  5  6  7  8
+R3  9 10 11 12
+R4 13 14 15 16
+R5 17 18 19 20
+> 
+> # 3 x 3 matrix filled BY COLUMN
+> m2 <- matrix(1:9, nrow = 3, ncol = 3, byrow = FALSE,
++              dimnames = list(c("a","b","c"), c("x","y","z")))
+> print("3 x 3 matrix (filled by column):")
+[1] "3 x 3 matrix (filled by column):"
+> print(m2)
+  x y z
+a 1 4 7
+b 2 5 8
+c 3 6 9
+> 
+> # 2 x 2 matrix filled BY ROW
+> m3 <- matrix(c(5, 10, 15, 20), nrow = 2, byrow = TRUE,
++              dimnames = list(c("Row1","Row2"), c("Col1","Col2")))
+> print("2 x 2 matrix (filled by row):")
+[1] "2 x 2 matrix (filled by row):"
+> print(m3)
+     Col1 Col2
+Row1    5   10
+Row2   15   20
+> 
+> # ======================================================================
+> # ITA04 STATISTICS WITH R PROGRAMMING - LAB EXPERIMENT 3
+> # 3D ARRAY
+> # ======================================================================
+> #
+> # AIM:
+> #   To create and display a 3-dimensional array with specified rows, columns and tables.
+> #
+> # PSEUDOCODE:
+> #   1. Start
+> #   2. Take the numbers 1 to 24
+> #   3. Create an array using array() with dim = c(rows, columns, tables) = c(4, 3, 2)
+> #   4. Display the array
+> #   5. Stop
+> #
+> # SAMPLE INPUT:
+> #   Data = 1:24, rows = 4, columns = 3, tables = 2
+> #
+> # SAMPLE OUTPUT:
+> #   , , 1
+> #
+> #        [,1] [,2] [,3]
+> #   [1,]    1    5    9
+> #   [2,]    2    6   10
+> #   [3,]    3    7   11
+> #   [4,]    4    8   12
+> #
+> #   , , 2
+> #
+> #        [,1] [,2] [,3]
+> #   [1,]   13   17   21
+> #   [2,]   14   18   22
+> #   [3,]   15   19   23
+> #   [4,]   16   20   24
+> #
+> #   Dimensions of the array: 4 3 2
+> #
+> # ======================================================================
+> # PROGRAM
+> # ======================================================================
+> 
+> arr <- array(1:24, dim = c(4, 3, 2))   # 4 rows, 3 columns, 2 tables
+> print(arr)
+, , 1
+
+     [,1] [,2] [,3]
+[1,]    1    5    9
+[2,]    2    6   10
+[3,]    3    7   11
+[4,]    4    8   12
+
+, , 2
+
+     [,1] [,2] [,3]
+[1,]   13   17   21
+[2,]   14   18   22
+[3,]   15   19   23
+[4,]   16   20   24
+
+> cat("Dimensions of the array:", dim(arr), "\n")
+Dimensions of the array: 4 3 2 
+> 
+> # ======================================================================
+> # RESULT:
+> #   A 3D array with 4 rows, 3 columns and 2 tables was created and displayed successfully.
+> # ======================================================================
+> # ======================================================================
+> # ITA04 STATISTICS WITH R PROGRAMMING - LAB EXPERIMENT 4
+> # ARRAY FROM VECTORS WITH DIMENSION NAMES
+> # ======================================================================
+> #
+> # AIM:
+> #   To create an array from vectors with dimension names and print specific elements.
+> #
+> # PSEUDOCODE:
+> #   1. Start
+> #   2. Create two vectors vec1 and vec2
+> #   3. Combine them into an array of dim 3 x 3 x 2 with dimnames
+> #   4. Print the full array
+> #   5. Print specific elements using [row, column, table]
+> #   6. Stop
+> #
+> # SAMPLE INPUT:
+> #   vec1 = 5, 9, 3 | vec2 = 10, 11, 12, 13, 14, 15
+> #
+> # SAMPLE OUTPUT:
+> #   , , Matrix1
+> #
+> #        Col1 Col2 Col3
+> #   Row1    5   10   13
+> #   Row2    9   11   14
+> #   Row3    3   12   15
+> #
+> #   , , Matrix2
+> #
+> #        Col1 Col2 Col3
+> #   Row1    5   10   13
+> #   Row2    9   11   14
+> #   Row3    3   12   15
+> #
+> #
+> #   Element at Row3, Col2 of Matrix1 : 12 
+> #   Element at Row1, Col3 of Matrix2 : 13 
+> #   [1] "Second matrix:"
+> #        Col1 Col2 Col3
+> #   Row1    5   10   13
+> #   Row2    9   11   14
+> #   Row3    3   12   15
+> #
+> # ======================================================================
+> # PROGRAM
+> # ======================================================================
+> 
+> vec1 <- c(5, 9, 3)
+> vec2 <- c(10, 11, 12, 13, 14, 15)
+> 
+> result <- array(c(vec1, vec2), dim = c(3, 3, 2),
++                 dimnames = list(c("Row1","Row2","Row3"),
++                                 c("Col1","Col2","Col3"),
++                                 c("Matrix1","Matrix2")))
+> print(result)
+, , Matrix1
+
+     Col1 Col2 Col3
+Row1    5   10   13
+Row2    9   11   14
+Row3    3   12   15
+
+, , Matrix2
+
+     Col1 Col2 Col3
+Row1    5   10   13
+Row2    9   11   14
+Row3    3   12   15
+
+> 
+> cat("\nElement at Row3, Col2 of Matrix1 :", result[3, 2, 1], "\n")
+
+Element at Row3, Col2 of Matrix1 : 12 
+> cat("Element at Row1, Col3 of Matrix2 :", result["Row1", "Col3", "Matrix2"], "\n")
+Element at Row1, Col3 of Matrix2 : 13 
+> print("Second matrix:")
+[1] "Second matrix:"
+> print(result[, , 2])
+     Col1 Col2 Col3
+Row1    5   10   13
+Row2    9   11   14
+Row3    3   12   15
+> 
+> # ======================================================================
+> # RESULT:
+> #   The array with dimension names was created and specific elements were printed successfully.
+> # ======================================================================
+> # ======================================================================
+> # ITA04 STATISTICS WITH R PROGRAMMING - LAB EXPERIMENT 5
+> # FACTOR VARIABLES
+> # ======================================================================
+> #
+> # AIM:
+> #   To create and manipulate factor variables using the women dataset heights and a random sample of LETTERS.
+> #
+> # PSEUDOCODE:
+> #   1. Start
+> #   2. Convert women$height into a factor and display levels
+> #   3. Find number of levels and summary of the factor
+> #   4. Set a seed and take a random sample of 10 LETTERS
+> #   5. Convert the sample into a factor and tabulate it
+> #   6. Create an ordered factor and compare levels
+> #   7. Stop
+> #
+> # SAMPLE INPUT:
+> #   Dataset: women (built-in) | sample(LETTERS, 10, replace = TRUE) with set.seed(1)
+> #
+> # SAMPLE OUTPUT:
+> #    [1] "58" "59" "60" "61" "62" "63" "64" "65" "66" "67" "68" "69" "70" "71" "72"
+> #   Number of levels: 15 
+> #   58 59 60 61 62 
+> #    1  1  1  1  1 
+> #    [1] "Y" "D" "G" "A" "B" "W" "K" "N" "R" "S"
+> #    [1] Y D G A B W K N R S
+> #   Levels: A B D G K N R S W Y
+> #   f
+> #   A B D G K N R S W Y 
+> #   1 1 1 1 1 1 1 1 1 1 
+> #   [1] Low    High   Medium Low   
+> #   Levels: Low < Medium < High
+> #   [1] TRUE
+> #
+> # ======================================================================
+> # PROGRAM
+> # ======================================================================
+> 
+> # Part 1: women dataset
+> h <- factor(women$height)
+> print(levels(h))
+ [1] "58" "59" "60" "61" "62" "63" "64" "65" "66" "67" "68" "69" "70" "71" "72"
+> cat("Number of levels:", nlevels(h), "\n")
+Number of levels: 15 
+> print(summary(h)[1:5])
+58 59 60 61 62 
+ 1  1  1  1  1 
+> 
+> # Part 2: random sample of LETTERS
+> set.seed(1)
+> s <- sample(LETTERS, 10, replace = TRUE)
+> f <- factor(s)
+> print(s)
+ [1] "Y" "D" "G" "A" "B" "W" "K" "N" "R" "S"
+> print(f)
+ [1] Y D G A B W K N R S
+Levels: A B D G K N R S W Y
+> print(table(f))
+f
+A B D G K N R S W Y 
+1 1 1 1 1 1 1 1 1 1 
+> 
+> # Part 3: ordered factor
+> size <- factor(c("Low", "High", "Medium", "Low"),
++                levels = c("Low", "Medium", "High"), ordered = TRUE)
+> print(size)
+[1] Low    High   Medium Low   
+Levels: Low < Medium < High
+> print(size[2] > size[1])
+[1] TRUE
+> 
+> # ======================================================================
+> # RESULT:
+> #   Factor variables were created from the women dataset and a random LETTERS sample, and manipulated successfully.
+> # ======================================================================
+> # ======================================================================
+> # ITA04 STATISTICS WITH R PROGRAMMING - LAB EXPERIMENT 6
+> # LIST WITH VECTORS, MATRICES AND FUNCTIONS
+> # ======================================================================
+> #
+> # AIM:
+> #   To create an R list containing a vector, a matrix and a function and display its contents.
+> #
+> # PSEUDOCODE:
+> #   1. Start
+> #   2. Create a vector, a matrix and a function
+> #   3. Combine them into a list using list()
+> #   4. Display the whole list
+> #   5. Access each element using $ and call the function
+> #   6. Stop
+> #
+> # SAMPLE INPUT:
+> #   Vector = 1:5 | Matrix = 2x2 (1:4) | Function = square(x) = x^2
+> #
+> # SAMPLE OUTPUT:
+> #   $vector
+> #   [1] 1 2 3 4 5
+> #
+> #   $matrix
+> #        [,1] [,2]
+> #   [1,]    1    3
+> #   [2,]    2    4
+> #
+> #   $func
+> #   function (x) 
+> #   {
+> #       return(x^2)
+> #   }
+> #
+> #
+> #   Vector element : 1 2 3 4 5 
+> #   Function call square(4) = 16
+> #
+> # ======================================================================
+> # PROGRAM
+> # ======================================================================
+> 
+> my_vec <- c(1, 2, 3, 4, 5)
+> my_mat <- matrix(1:4, nrow = 2)
+> square <- function(x) {
++   return(x^2)
++ }
+> 
+> my_list <- list(vector = my_vec, matrix = my_mat, func = square)
+> 
+> print(my_list)
+$vector
+[1] 1 2 3 4 5
+
+$matrix
+     [,1] [,2]
+[1,]    1    3
+[2,]    2    4
+
+$func
+function(x) {
+  return(x^2)
+}
+
+> 
+> cat("\nVector element :", my_list$vector, "\n")
+
+Vector element : 1 2 3 4 5 
+> cat("Function call square(4) =", my_list$func(4), "\n")
+Function call square(4) = 16 
+> 
+> # ======================================================================
+> # RESULT:
+> #   The list containing a vector, a matrix and a function was created and its contents displayed successfully.
+> # ======================================================================
+> # ======================================================================
+> # ITA04 STATISTICS WITH R PROGRAMMING - LAB EXPERIMENT 7
+> # FACTORS OF A NUMBER, RANDOM INTEGERS AND FIZZBUZZ
+> # ======================================================================
+> #
+> # AIM:
+> #   To write R programs for (a) factors of a number, (b) 10 random integers between -50 and 50, (c) FizzBuzz for 1 to 100.
+> #
+> # PSEUDOCODE:
+> #   1. Start
+> #   2. (a) Read n; for i = 1 to n, if n %% i == 0 then print i
+> #   3. (b) Use sample(-50:50, 10) to generate random integers
+> #   4. (c) For i = 1 to 100: if i divisible by 15 print FizzBuzz, else if by 3 print Fizz, else if by 5 print Buzz, else print i
+> #   5. Stop
+> #
+> # SAMPLE INPUT:
+> #   n = 24 | set.seed(10) for reproducible random numbers
+> #
+> # SAMPLE OUTPUT:
+> #   Factors of 24 are: 1 2 3 4 6 8 12 24 
+> #
+> #   Random integers: -42 23 25 4 21 3 -12 32 37 -36 
+> #
+> #   [1] 1
+> #   [1] 2
+> #   [1] "Fizz"
+> #   [1] 4
+> #   [1] "Buzz"
+> #   [1] "Fizz"
+> #   [1] 7
+> #   [1] 8
+> #   [1] "Fizz"
+> #   [1] "Buzz"
+> #   [1] 11
+> #   [1] "Fizz"
+> #   [1] 13
+> #   [1] 14
+> #   [1] "FizzBuzz"
+> #   [1] 16
+> #   [1] 17
+> #   [1] "Fizz"
+> #   [1] 19
+> #   [1] "Buzz"
+> #   [1] "Fizz"
+> #   ... (output truncated here, full output appears in R console)
+> #
+> # ======================================================================
+> # PROGRAM
+> # ======================================================================
+> 
+> # (a) Factors of a number
+> n <- 24
+> cat("Factors of", n, "are: ")
+Factors of 24 are: > for (i in 1:n) {
++   if (n %% i == 0) cat(i, "")
++ }
+1 2 3 4 6 8 12 24 > cat("\n\n")
+
+
+> 
+> # (b) 10 random integers between -50 and 50
+> set.seed(10)
+> rand_vec <- sample(-50:50, 10, replace = TRUE)
+> cat("Random integers:", rand_vec, "\n\n")
+Random integers: -42 23 25 4 21 3 -12 32 37 -36 
+
+> 
+> # (c) FizzBuzz 1 to 100
+> for (i in 1:100) {
++   if (i %% 15 == 0) {
++     print("FizzBuzz")
++   } else if (i %% 3 == 0) {
++     print("Fizz")
++   } else if (i %% 5 == 0) {
++     print("Buzz")
++   } else {
++     print(i)
++   }
++ }
+[1] 1
+[1] 2
+[1] "Fizz"
+[1] 4
+[1] "Buzz"
+[1] "Fizz"
+[1] 7
+[1] 8
+[1] "Fizz"
+[1] "Buzz"
+[1] 11
+[1] "Fizz"
+[1] 13
+[1] 14
+[1] "FizzBuzz"
+[1] 16
+[1] 17
+[1] "Fizz"
+[1] 19
+[1] "Buzz"
+[1] "Fizz"
+[1] 22
+[1] 23
+[1] "Fizz"
+[1] "Buzz"
+[1] 26
+[1] "Fizz"
+[1] 28
+[1] 29
+[1] "FizzBuzz"
+[1] 31
+[1] 32
+[1] "Fizz"
+[1] 34
+[1] "Buzz"
+[1] "Fizz"
+[1] 37
+[1] 38
+[1] "Fizz"
+[1] "Buzz"
+[1] 41
+[1] "Fizz"
+[1] 43
+[1] 44
+[1] "FizzBuzz"
+[1] 46
+[1] 47
+[1] "Fizz"
+[1] 49
+[1] "Buzz"
+[1] "Fizz"
+[1] 52
+[1] 53
+[1] "Fizz"
+[1] "Buzz"
+[1] 56
+[1] "Fizz"
+[1] 58
+[1] 59
+[1] "FizzBuzz"
+[1] 61
+[1] 62
+[1] "Fizz"
+[1] 64
+[1] "Buzz"
+[1] "Fizz"
+[1] 67
+[1] 68
+[1] "Fizz"
+[1] "Buzz"
+[1] 71
+[1] "Fizz"
+[1] 73
+[1] 74
+[1] "FizzBuzz"
+[1] 76
+[1] 77
+[1] "Fizz"
+[1] 79
+[1] "Buzz"
+[1] "Fizz"
+[1] 82
+[1] 83
+[1] "Fizz"
+[1] "Buzz"
+[1] 86
+[1] "Fizz"
+[1] 88
+[1] 89
+[1] "FizzBuzz"
+[1] 91
+[1] 92
+[1] "Fizz"
+[1] 94
+[1] "Buzz"
+[1] "Fizz"
+[1] 97
+[1] 98
+[1] "Fizz"
+[1] "Buzz"
+> 
+> # ======================================================================
+> # RESULT:
+> #   Factors of 24, 10 random integers in the range -50 to 50, and the FizzBuzz series 1-100 were generated successfully.
+> # ======================================================================
+> # ======================================================================
+> # ITA04 STATISTICS WITH R PROGRAMMING - LAB EXPERIMENT 8
+> # RANDOM NUMBERS FROM A NORMAL DISTRIBUTION
+> # ======================================================================
+> #
+> # AIM:
+> #   To generate random numbers from a normal distribution and count their occurrences.
+> #
+> # PSEUDOCODE:
+> #   1. Start
+> #   2. Set seed for reproducibility
+> #   3. Generate 20 numbers using rnorm(20, mean = 5, sd = 2)
+> #   4. Round the values to whole numbers
+> #   5. Count occurrences of each value using table()
+> #   6. Count values above the mean
+> #   7. Stop
+> #
+> # SAMPLE INPUT:
+> #   n = 20, mean = 5, sd = 2, set.seed(123)
+> #
+> # SAMPLE OUTPUT:
+> #    [1] 3.88 4.54 8.12 5.14 5.26 8.43 5.92 2.47 3.63 4.11 7.45 5.72 5.80 5.22 3.89
+> #   [16] 8.57 6.00 1.07 6.40 4.05
+> #
+> #   Rounded values: 4 5 8 5 5 8 6 2 4 4 7 6 6 5 4 9 6 1 6 4 
+> #
+> #   Occurrences of each value:
+> #   r
+> #   1 2 4 5 6 7 8 9 
+> #   1 1 5 4 5 1 2 1 
+> #
+> #   Numbers greater than the mean ( 5.28 ): 9
+> #
+> # ======================================================================
+> # PROGRAM
+> # ======================================================================
+> 
+> set.seed(123)
+> x <- rnorm(20, mean = 5, sd = 2)
+> print(round(x, 2))
+ [1] 3.88 4.54 8.12 5.14 5.26 8.43 5.92 2.47 3.63 4.11 7.45 5.72 5.80 5.22 3.89
+[16] 8.57 6.00 1.07 6.40 4.05
+> 
+> r <- round(x)
+> cat("\nRounded values:", r, "\n")
+
+Rounded values: 4 5 8 5 5 8 6 2 4 4 7 6 6 5 4 9 6 1 6 4 
+> 
+> cat("\nOccurrences of each value:\n")
+
+Occurrences of each value:
+> print(table(r))
+r
+1 2 4 5 6 7 8 9 
+1 1 5 4 5 1 2 1 
+> 
+> cat("\nNumbers greater than the mean (", round(mean(x), 2), "):", sum(x > mean(x)), "\n")
+
+Numbers greater than the mean ( 5.28 ): 9 
+> 
+> # ======================================================================
+> # RESULT:
+> #   Normal random numbers were generated and the count of each value was displayed successfully.
+> # ======================================================================
+> # ======================================================================
+> # ITA04 STATISTICS WITH R PROGRAMMING - LAB EXPERIMENT 9
+> # EMPTY PLOTS WITH AXIS LIMITS
+> # ======================================================================
+> #
+> # AIM:
+> #   To create empty plots with specified axis limits.
+> #
+> # PSEUDOCODE:
+> #   1. Start
+> #   2. Use plot() with type = "n" so nothing is drawn
+> #   3. Set xlim and ylim to the required limits
+> #   4. Add labels and title
+> #   5. Create a second empty plot with different limits
+> #   6. Stop
+> #
+> # SAMPLE INPUT:
+> #   Plot 1: x = 0 to 10, y = 0 to 50 | Plot 2: x = -5 to 5, y = -10 to 10
+> #
+> # SAMPLE OUTPUT:
+> #   Two empty plots created.
+> #   [Graph(s) appear in the R Graphics window]
+> #
+> # ======================================================================
+> # PROGRAM
+> # ======================================================================
+> 
+> par(mfrow = c(1, 2))   # two plots side by side
+> 
+> plot(1, type = "n", xlim = c(0, 10), ylim = c(0, 50),
++      xlab = "X axis", ylab = "Y axis", main = "Empty plot 1")
+> 
+> plot(1, type = "n", xlim = c(-5, 5), ylim = c(-10, 10),
++      xlab = "X axis", ylab = "Y axis", main = "Empty plot 2")
+> 
+> par(mfrow = c(1, 1))
+> cat("Two empty plots created.\n")
+Two empty plots created.
+> 
+> # ======================================================================
+> # RESULT:
+> #   Two empty plots with the specified axis limits were created successfully (see the Graphics window).
+> # ======================================================================
+> # ======================================================================
+> # ITA04 STATISTICS WITH R PROGRAMMING - LAB EXPERIMENT 10
+> # DATA FRAME EXAM_DATA
+> # ======================================================================
+> #
+> # AIM:
+> #   To create and explore a data frame exam_data and perform extract, add row/column, sort and save to file.
+> #
+> # PSEUDOCODE:
+> #   1. Start
+> #   2. Create data frame with name, score, attempts, qualify
+> #   3. Display structure and summary
+> #   4. Extract first two rows and selected columns
+> #   5. Add a new row using rbind() and a new column using $
+> #   6. Sort by score using order()
+> #   7. Save the data frame to CSV using write.csv()
+> #   8. Stop
+> #
+> # SAMPLE INPUT:
+> #   10 students with name, score, attempts and qualify (yes/no)
+> #
+> # SAMPLE OUTPUT:
+> #           name score attempts qualify
+> #   1  Anastasia  12.5        1     yes
+> #   2       Dima   9.0        3      no
+> #   3  Katherine  16.5        2     yes
+> #   4      James    NA        3      no
+> #   5      Emily   9.0        2      no
+> #   6    Michael  20.0        3     yes
+> #   7    Matthew  14.5        1     yes
+> #   8      Laura  13.5        1      no
+> #   9      Kevin   8.0        2      no
+> #   10     Jonas  19.0        1     yes
+> #   'data.frame':10 obs. of  4 variables:
+> #    $ name    : chr  "Anastasia" "Dima" "Katherine" "James" ...
+> #    $ score   : num  12.5 9 16.5 NA 9 20 14.5 13.5 8 19
+> #    $ attempts: num  1 3 2 3 2 3 1 1 2 1
+> #    $ qualify : chr  "yes" "no" "yes" "no" ...
+> #
+> #   First two rows:
+> #          name score attempts qualify
+> #   1 Anastasia  12.5        1     yes
+> #   2      Dima   9.0        3      no
+> #
+> #   Name and score columns:
+> #           name score
+> #   1  Anastasia  12.5
+> #   2       Dima   9.0
+> #   3  Katherine  16.5
+> #   4      James    NA
+> #   5      Emily   9.0
+> #   6    Michael  20.0
+> #   ... (output truncated here, full output appears in R console)
+> #
+> # ======================================================================
+> # PROGRAM
+> # ======================================================================
+> 
+> exam_data <- data.frame(
++   name = c("Anastasia", "Dima", "Katherine", "James", "Emily",
++            "Michael", "Matthew", "Laura", "Kevin", "Jonas"),
++   score = c(12.5, 9, 16.5, NA, 9, 20, 14.5, 13.5, 8, 19),
++   attempts = c(1, 3, 2, 3, 2, 3, 1, 1, 2, 1),
++   qualify = c("yes", "no", "yes", "no", "no", "yes", "yes", "no", "no", "yes"),
++   stringsAsFactors = FALSE
++ )
+> 
+> print(exam_data)
+        name score attempts qualify
+1  Anastasia  12.5        1     yes
+2       Dima   9.0        3      no
+3  Katherine  16.5        2     yes
+4      James    NA        3      no
+5      Emily   9.0        2      no
+6    Michael  20.0        3     yes
+7    Matthew  14.5        1     yes
+8      Laura  13.5        1      no
+9      Kevin   8.0        2      no
+10     Jonas  19.0        1     yes
+> str(exam_data)
+'data.frame':   10 obs. of  4 variables:
+ $ name    : chr  "Anastasia" "Dima" "Katherine" "James" ...
+ $ score   : num  12.5 9 16.5 NA 9 20 14.5 13.5 8 19
+ $ attempts: num  1 3 2 3 2 3 1 1 2 1
+ $ qualify : chr  "yes" "no" "yes" "no" ...
+> 
+> # Extract
+> cat("\nFirst two rows:\n");           print(exam_data[1:2, ])
+
+First two rows:
+       name score attempts qualify
+1 Anastasia  12.5        1     yes
+2      Dima   9.0        3      no
+> cat("\nName and score columns:\n");   print(exam_data[, c("name", "score")])
+
+Name and score columns:
+        name score
+1  Anastasia  12.5
+2       Dima   9.0
+3  Katherine  16.5
+4      James    NA
+5      Emily   9.0
+6    Michael  20.0
+7    Matthew  14.5
+8      Laura  13.5
+9      Kevin   8.0
+10     Jonas  19.0
+> 
+> # Add a new row
+> new_row <- data.frame(name = "Suresh", score = 15, attempts = 1, qualify = "yes")
+> exam_data <- rbind(exam_data, new_row)
+> 
+> # Add a new column
+> exam_data$country <- "India"
+> cat("\nAfter adding row and column:\n"); print(exam_data)
+
+After adding row and column:
+        name score attempts qualify country
+1  Anastasia  12.5        1     yes   India
+2       Dima   9.0        3      no   India
+3  Katherine  16.5        2     yes   India
+4      James    NA        3      no   India
+5      Emily   9.0        2      no   India
+6    Michael  20.0        3     yes   India
+7    Matthew  14.5        1     yes   India
+8      Laura  13.5        1      no   India
+9      Kevin   8.0        2      no   India
+10     Jonas  19.0        1     yes   India
+11    Suresh  15.0        1     yes   India
+> 
+> # Sort by score (descending)
+> sorted_data <- exam_data[order(-exam_data$score), ]
+> cat("\nSorted by score:\n"); print(sorted_data)
+
+Sorted by score:
+        name score attempts qualify country
+6    Michael  20.0        3     yes   India
+10     Jonas  19.0        1     yes   India
+3  Katherine  16.5        2     yes   India
+11    Suresh  15.0        1     yes   India
+7    Matthew  14.5        1     yes   India
+8      Laura  13.5        1      no   India
+1  Anastasia  12.5        1     yes   India
+2       Dima   9.0        3      no   India
+5      Emily   9.0        2      no   India
+9      Kevin   8.0        2      no   India
+4      James    NA        3      no   India
+> 
+> # Save to file
+> write.csv(exam_data, "exam_data.csv", row.names = FALSE)
+> cat("\nFile exam_data.csv saved in:", getwd(), "\n")
+
+File exam_data.csv saved in: C:/Users/RAKSHITH.R.R/OneDrive/文档 
+> 
+> # ======================================================================
+> # RESULT:
+> #   The exam_data data frame was created, extracted, modified, sorted and saved to exam_data.csv successfully.
+> # ======================================================================
+> # ======================================================================
+> # ITA04 STATISTICS WITH R PROGRAMMING - LAB EXPERIMENT 10
+> # DATA FRAME EXAM_DATA
+> # ======================================================================
+> #
+> # AIM:
+> #   To create and explore a data frame exam_data and perform extract, add row/column, sort and save to file.
+> #
+> # PSEUDOCODE:
+> #   1. Start
+> #   2. Create data frame with name, score, attempts, qualify
+> #   3. Display structure and summary
+> #   4. Extract first two rows and selected columns
+> #   5. Add a new row using rbind() and a new column using $
+> #   6. Sort by score using order()
+> #   7. Save the data frame to CSV using write.csv()
+> #   8. Stop
+> #
+> # SAMPLE INPUT:
+> #   10 students with name, score, attempts and qualify (yes/no)
+> #
+> # SAMPLE OUTPUT:
+> #           name score attempts qualify
+> #   1  Anastasia  12.5        1     yes
+> #   2       Dima   9.0        3      no
+> #   3  Katherine  16.5        2     yes
+> #   4      James    NA        3      no
+> #   5      Emily   9.0        2      no
+> #   6    Michael  20.0        3     yes
+> #   7    Matthew  14.5        1     yes
+> #   8      Laura  13.5        1      no
+> #   9      Kevin   8.0        2      no
+> #   10     Jonas  19.0        1     yes
+> #   'data.frame':10 obs. of  4 variables:
+> #    $ name    : chr  "Anastasia" "Dima" "Katherine" "James" ...
+> #    $ score   : num  12.5 9 16.5 NA 9 20 14.5 13.5 8 19
+> #    $ attempts: num  1 3 2 3 2 3 1 1 2 1
+> #    $ qualify : chr  "yes" "no" "yes" "no" ...
+> #
+> #   First two rows:
+> #          name score attempts qualify
+> #   1 Anastasia  12.5        1     yes
+> #   2      Dima   9.0        3      no
+> #
+> #   Name and score columns:
+> #           name score
+> #   1  Anastasia  12.5
+> #   2       Dima   9.0
+> #   3  Katherine  16.5
+> #   4      James    NA
+> #   5      Emily   9.0
+> #   6    Michael  20.0
+> #   ... (output truncated here, full output appears in R console)
+> #
+> # ======================================================================
+> # PROGRAM
+> # ======================================================================
+> 
+> exam_data <- data.frame(
++   name = c("Anastasia", "Dima", "Katherine", "James", "Emily",
++            "Michael", "Matthew", "Laura", "Kevin", "Jonas"),
++   score = c(12.5, 9, 16.5, NA, 9, 20, 14.5, 13.5, 8, 19),
++   attempts = c(1, 3, 2, 3, 2, 3, 1, 1, 2, 1),
++   qualify = c("yes", "no", "yes", "no", "no", "yes", "yes", "no", "no", "yes"),
++   stringsAsFactors = FALSE
++ )
+> 
+> print(exam_data)
+        name score attempts qualify
+1  Anastasia  12.5        1     yes
+2       Dima   9.0        3      no
+3  Katherine  16.5        2     yes
+4      James    NA        3      no
+5      Emily   9.0        2      no
+6    Michael  20.0        3     yes
+7    Matthew  14.5        1     yes
+8      Laura  13.5        1      no
+9      Kevin   8.0        2      no
+10     Jonas  19.0        1     yes
+> str(exam_data)
+'data.frame':   10 obs. of  4 variables:
+ $ name    : chr  "Anastasia" "Dima" "Katherine" "James" ...
+ $ score   : num  12.5 9 16.5 NA 9 20 14.5 13.5 8 19
+ $ attempts: num  1 3 2 3 2 3 1 1 2 1
+ $ qualify : chr  "yes" "no" "yes" "no" ...
+> 
+> # Extract
+> cat("\nFirst two rows:\n");           print(exam_data[1:2, ])
+
+First two rows:
+       name score attempts qualify
+1 Anastasia  12.5        1     yes
+2      Dima   9.0        3      no
+> cat("\nName and score columns:\n");   print(exam_data[, c("name", "score")])
+
+Name and score columns:
+        name score
+1  Anastasia  12.5
+2       Dima   9.0
+3  Katherine  16.5
+4      James    NA
+5      Emily   9.0
+6    Michael  20.0
+7    Matthew  14.5
+8      Laura  13.5
+9      Kevin   8.0
+10     Jonas  19.0
+> 
+> # Add a new row
+> new_row <- data.frame(name = "Suresh", score = 15, attempts = 1, qualify = "yes")
+> exam_data <- rbind(exam_data, new_row)
+> 
+> # Add a new column
+> exam_data$country <- "India"
+> cat("\nAfter adding row and column:\n"); print(exam_data)
+
+After adding row and column:
+        name score attempts qualify country
+1  Anastasia  12.5        1     yes   India
+2       Dima   9.0        3      no   India
+3  Katherine  16.5        2     yes   India
+4      James    NA        3      no   India
+5      Emily   9.0        2      no   India
+6    Michael  20.0        3     yes   India
+7    Matthew  14.5        1     yes   India
+8      Laura  13.5        1      no   India
+9      Kevin   8.0        2      no   India
+10     Jonas  19.0        1     yes   India
+11    Suresh  15.0        1     yes   India
+> 
+> # Sort by score (descending)
+> sorted_data <- exam_data[order(-exam_data$score), ]
+> cat("\nSorted by score:\n"); print(sorted_data)
+
+Sorted by score:
+        name score attempts qualify country
+6    Michael  20.0        3     yes   India
+10     Jonas  19.0        1     yes   India
+3  Katherine  16.5        2     yes   India
+11    Suresh  15.0        1     yes   India
+7    Matthew  14.5        1     yes   India
+8      Laura  13.5        1      no   India
+1  Anastasia  12.5        1     yes   India
+2       Dima   9.0        3      no   India
+5      Emily   9.0        2      no   India
+9      Kevin   8.0        2      no   India
+4      James    NA        3      no   India
+> 
+> # Save to file
+> write.csv(exam_data, "exam_data.csv", row.names = FALSE)
+> cat("\nFile exam_data.csv saved in:", getwd(), "\n")
+
+File exam_data.csv saved in: C:/Users/RAKSHITH.R.R/OneDrive/文档 
+> 
+> # ======================================================================
+> # RESULT:
+> #   The exam_data data frame was created, extracted, modified, sorted and saved to exam_data.csv successfully.
+> # ======================================================================
+> # ======================================================================
+> # ITA04 STATISTICS WITH R PROGRAMMING - LAB EXPERIMENT 11
+> # READ A CSV FILE
+> # ======================================================================
+> #
+> # AIM:
+> #   To read a .csv file and display its contents.
+> #
+> # PSEUDOCODE:
+> #   1. Start
+> #   2. Create a sample CSV file students.csv (so the program is self-contained)
+> #   3. Read the file using read.csv()
+> #   4. Display the contents, structure and dimensions
+> #   5. Stop
+> #
+> # SAMPLE INPUT:
+> #   File: students.csv (id, name, marks)
+> #
+> # SAMPLE OUTPUT:
+> #     id   name marks
+> #   1  1   Arun    85
+> #   2  2   Bala    72
+> #   3  3 Charan    90
+> #   4  4  Divya    66
+> #   5  5   Esha    78
+> #   'data.frame':5 obs. of  3 variables:
+> #    $ id   : int  1 2 3 4 5
+> #    $ name : chr  "Arun" "Bala" "Charan" "Divya" ...
+> #    $ marks: int  85 72 90 66 78
+> #   Rows: 5  Columns: 3
+> #
+> # ======================================================================
+> # PROGRAM
+> # ======================================================================
+> 
+> # Create a sample CSV file
+> students <- data.frame(id = 1:5,
++                        name = c("Arun", "Bala", "Charan", "Divya", "Esha"),
++                        marks = c(85, 72, 90, 66, 78))
+> write.csv(students, "students.csv", row.names = FALSE)
+> 
+> # Read the CSV file
+> data <- read.csv("students.csv")
+> 
+> print(data)
+  id   name marks
+1  1   Arun    85
+2  2   Bala    72
+3  3 Charan    90
+4  4  Divya    66
+5  5   Esha    78
+> str(data)
+'data.frame':   5 obs. of  3 variables:
+ $ id   : int  1 2 3 4 5
+ $ name : chr  "Arun" "Bala" "Charan" "Divya" ...
+ $ marks: int  85 72 90 66 78
+> cat("Rows:", nrow(data), " Columns:", ncol(data), "\n")
+Rows: 5  Columns: 3 
+> 
+> # ======================================================================
+> # RESULT:
+> #   The CSV file was read and its contents were displayed successfully.
+> # ======================================================================
+> # ======================================================================
+> # ITA04 STATISTICS WITH R PROGRAMMING - LAB EXPERIMENT 12
+> # DATA RESHAPING ON AIRQUALITY (MELT AND CAST)
+> # ======================================================================
+> #
+> # AIM:
+> #   To perform data reshaping on the airquality dataset using melt and cast, and compute monthly averages of Ozone, Solar.R, Wind and Temp.
+> #
+> # PSEUDOCODE:
+> #   1. Start
+> #   2. Load reshape2 and the airquality dataset
+> #   3. Convert column names to lowercase
+> #   4. Melt the data with id = (month, day)
+> #   5. Cast the molten data by month with mean using dcast()
+> #   6. Display monthly averages
+> #   7. Stop
+> #
+> # SAMPLE INPUT:
+> #   Dataset: airquality (built-in)
+> #
+> # SAMPLE OUTPUT:
+> #     ozone solar.r wind temp month day
+> #   1    41     190  7.4   67     5   1
+> #   2    36     118  8.0   72     5   2
+> #   3    12     149 12.6   74     5   3
+> #   4    18     313 11.5   62     5   4
+> #   5    NA      NA 14.3   56     5   5
+> #   6    28      NA 14.9   66     5   6
+> #
+> #   Molten data:
+> #     month day variable value
+> #   1     5   1    ozone    41
+> #   2     5   2    ozone    36
+> #   3     5   3    ozone    12
+> #   4     5   4    ozone    18
+> #   6     5   6    ozone    28
+> #   7     5   7    ozone    23
+> #
+> #   Monthly averages:
+> #     month ozone solar.r  wind  temp
+> #   1     5 23.62  181.30 11.62 65.55
+> #   2     6 29.44  190.17 10.27 79.10
+> #   3     7 59.12  216.48  8.94 83.90
+> #   4     8 59.96  171.86  8.79 83.97
+> #   5     9 31.45  167.43 10.18 76.90
+> #
+> # ======================================================================
+> # PROGRAM
+> # ======================================================================
+> 
+> if (!require(reshape2)) install.packages("reshape2")
+Loading required package: reshape2
+> library(reshape2)
+> 
+> names(airquality) <- tolower(names(airquality))
+> print(head(airquality))
+  ozone solar.r wind temp month day
+1    41     190  7.4   67     5   1
+2    36     118  8.0   72     5   2
+3    12     149 12.6   74     5   3
+4    18     313 11.5   62     5   4
+5    NA      NA 14.3   56     5   5
+6    28      NA 14.9   66     5   6
+> 
+> # MELT: wide to long
+> aq_melt <- melt(airquality, id.vars = c("month", "day"), na.rm = TRUE)
+> cat("\nMolten data:\n")
+
+Molten data:
+> print(head(aq_melt))
+  month day variable value
+1     5   1    ozone    41
+2     5   2    ozone    36
+3     5   3    ozone    12
+4     5   4    ozone    18
+6     5   6    ozone    28
+7     5   7    ozone    23
+> 
+> # CAST: long to wide with monthly averages
+> monthly_avg <- dcast(aq_melt, month ~ variable, mean)
+> cat("\nMonthly averages:\n")
+
+Monthly averages:
+> print(round(monthly_avg, 2))
+  month ozone solar.r  wind  temp
+1     5 23.62  181.30 11.62 65.55
+2     6 29.44  190.17 10.27 79.10
+3     7 59.12  216.48  8.94 83.90
+4     8 59.96  171.86  8.79 83.97
+5     9 31.45  167.43 10.18 76.90
+> 
+> # ======================================================================
+> # RESULT:
+> #   The airquality data was melted and cast, and monthly averages were computed successfully.
+> # ======================================================================
+> # ======================================================================
+> # ITA04 STATISTICS WITH R PROGRAMMING - LAB EXPERIMENT 13
+> # COMBINE MULTIPLE ARRAYS ROW-WISE
+> # ======================================================================
+> #
+> # AIM:
+> #   To combine multiple arrays row-wise.
+> #
+> # PSEUDOCODE:
+> #   1. Start
+> #   2. Create three arrays of the same number of columns
+> #   3. Combine them using rbind()
+> #   4. Display the combined array and its dimensions
+> #   5. Stop
+> #
+> # SAMPLE INPUT:
+> #   arr1 = 1:6, arr2 = 7:12, arr3 = 13:18 (each 2 x 3)
+> #
+> # SAMPLE OUTPUT:
+> #   [1] "Combined row-wise:"
+> #        [,1] [,2] [,3]
+> #   [1,]    1    3    5
+> #   [2,]    2    4    6
+> #   [3,]    7    9   11
+> #   [4,]    8   10   12
+> #   [5,]   13   15   17
+> #   [6,]   14   16   18
+> #   Dimensions: 6 3
+> #
+> # ======================================================================
+> # PROGRAM
+> # ======================================================================
+> 
+> arr1 <- array(1:6,   dim = c(2, 3))
+> arr2 <- array(7:12,  dim = c(2, 3))
+> arr3 <- array(13:18, dim = c(2, 3))
+> 
+> combined <- rbind(arr1, arr2, arr3)
+> 
+> print("Combined row-wise:")
+[1] "Combined row-wise:"
+> print(combined)
+     [,1] [,2] [,3]
+[1,]    1    3    5
+[2,]    2    4    6
+[3,]    7    9   11
+[4,]    8   10   12
+[5,]   13   15   17
+[6,]   14   16   18
+> cat("Dimensions:", dim(combined), "\n")
+Dimensions: 6 3 
+> 
+> # ======================================================================
+> # RESULT:
+> #   Three arrays were combined row-wise into a 6 x 3 array successfully.
+> # ======================================================================
+> # ======================================================================
+> # ITA04 STATISTICS WITH R PROGRAMMING - LAB EXPERIMENT 14
+> # CHICKWEIGHT DATASET - SORT, MELT, CAST
+> # ======================================================================
+> #
+> # AIM:
+> #   To explore and manipulate the ChickWeight dataset (sorting, melting, casting by Diet).
+> #
+> # PSEUDOCODE:
+> #   1. Start
+> #   2. Load ChickWeight and convert it to a data frame
+> #   3. Display structure and summary
+> #   4. Sort by weight in descending order
+> #   5. Melt the data with id = (Chick, Diet, Time)
+> #   6. Cast by Diet to find average weight
+> #   7. Cast by Diet and Time (selected times)
+> #   8. Stop
+> #
+> # SAMPLE INPUT:
+> #   Dataset: ChickWeight (built-in)
+> #
+> # SAMPLE OUTPUT:
+> #     weight Time Chick Diet
+> #   1     42    0     1    1
+> #   2     51    2     1    1
+> #   3     59    4     1    1
+> #   4     64    6     1    1
+> #   5     76    8     1    1
+> #   6     93   10     1    1
+> #   'data.frame':578 obs. of  4 variables:
+> #    $ weight: num  42 51 59 64 76 93 106 125 149 171 ...
+> #    $ Time  : num  0 2 4 6 8 10 12 14 16 18 ...
+> #    $ Chick : Ord.factor w/ 50 levels "18"<"16"<"15"<..: 15 15 15 15 15 15 15 15 15 15 ...
+> #    $ Diet  : Factor w/ 4 levels "1","2","3","4": 1 1 1 1 1 1 1 1 1 1 ...
+> #    - attr(*, "formula")=Class 'formula'  language weight ~ Time | Chick
+> #     .. ..- attr(*, ".Environment")=<environment: R_EmptyEnv> 
+> #    - attr(*, "outer")=Class 'formula'  language ~Diet
+> #     .. ..- attr(*, ".Environment")=<environment: R_EmptyEnv> 
+> #    - attr(*, "labels")=List of 2
+> #     ..$ x: chr "Time"
+> #     ..$ y: chr "Body weight"
+> #    - attr(*, "units")=List of 2
+> #     ..$ x: chr "(days)"
+> #     ..$ y: chr "(gm)"
+> #
+> #   Top 5 heaviest records:
+> #       weight Time Chick Diet
+> #   400    373   21    35    3
+> #   399    361   20    35    3
+> #   388    341   21    34    3
+> #   398    332   18    35    3
+> #   232    331   21    21    2
+> #
+> #   Molten data:
+> #     Chick Diet Time variable value
+> #   1     1    1    0   weight    42
+> #   2     1    1    2   weight    51
+> #   3     1    1    4   weight    59
+> #   4     1    1    6   weight    64
+> #   5     1    1    8   weight    76
+> #   6     1    1   10   weight    93
+> #
+> #   ... (output truncated here, full output appears in R console)
+> #
+> # ======================================================================
+> # PROGRAM
+> # ======================================================================
+> 
+> library(reshape2)
+> 
+> cw <- as.data.frame(ChickWeight)
+> print(head(cw))
+  weight Time Chick Diet
+1     42    0     1    1
+2     51    2     1    1
+3     59    4     1    1
+4     64    6     1    1
+5     76    8     1    1
+6     93   10     1    1
+> str(cw)
+'data.frame':   578 obs. of  4 variables:
+ $ weight: num  42 51 59 64 76 93 106 125 149 171 ...
+ $ Time  : num  0 2 4 6 8 10 12 14 16 18 ...
+ $ Chick : Ord.factor w/ 50 levels "18"<"16"<"15"<..: 15 15 15 15 15 15 15 15 15 15 ...
+ $ Diet  : Factor w/ 4 levels "1","2","3","4": 1 1 1 1 1 1 1 1 1 1 ...
+ - attr(*, "formula")=Class 'formula'  language weight ~ Time | Chick
+  .. ..- attr(*, ".Environment")=<environment: R_EmptyEnv> 
+ - attr(*, "outer")=Class 'formula'  language ~Diet
+  .. ..- attr(*, ".Environment")=<environment: R_EmptyEnv> 
+ - attr(*, "labels")=List of 2
+  ..$ x: chr "Time"
+  ..$ y: chr "Body weight"
+ - attr(*, "units")=List of 2
+  ..$ x: chr "(days)"
+  ..$ y: chr "(gm)"
+> 
+> # Sorting (heaviest first)
+> cat("\nTop 5 heaviest records:\n")
+
+Top 5 heaviest records:
+> print(head(cw[order(-cw$weight), ], 5))
+    weight Time Chick Diet
+400    373   21    35    3
+399    361   20    35    3
+388    341   21    34    3
+398    332   18    35    3
+232    331   21    21    2
+> 
+> # Melting
+> cw_melt <- melt(cw, id.vars = c("Chick", "Diet", "Time"), measure.vars = "weight")
+> cat("\nMolten data:\n")
+
+Molten data:
+> print(head(cw_melt))
+  Chick Diet Time variable value
+1     1    1    0   weight    42
+2     1    1    2   weight    51
+3     1    1    4   weight    59
+4     1    1    6   weight    64
+5     1    1    8   weight    76
+6     1    1   10   weight    93
+> 
+> # Casting by Diet
+> cat("\nAverage weight by Diet:\n")
+
+Average weight by Diet:
+> print(dcast(cw_melt, Diet ~ variable, mean))
+  Diet   weight
+1    1 102.6455
+2    2 122.6167
+3    3 142.9500
+4    4 135.2627
+> 
+> # Casting by Diet and Time
+> cat("\nAverage weight by Diet at Time 0, 10, 20:\n")
+
+Average weight by Diet at Time 0, 10, 20:
+> sub <- cw_melt[cw_melt$Time %in% c(0, 10, 20), ]
+> tbl <- dcast(sub, Diet ~ Time, mean)
+> tbl[, -1] <- round(tbl[, -1], 2)
+> print(tbl)
+  Diet    0     10     20
+1    1 41.4  93.05 170.41
+2    2 40.7 108.50 205.60
+3    3 40.8 117.10 258.90
+4    4 41.0 126.00 233.89
+> 
+> # ======================================================================
+> # RESULT:
+> #   ChickWeight data was sorted, melted and cast by Diet successfully.
+> # ======================================================================
+> # ======================================================================
+> # ITA04 STATISTICS WITH R PROGRAMMING - LAB EXPERIMENT 15
+> # EXPLORATORY DATA ANALYSIS ON IRIS
+> # ======================================================================
+> #
+> # AIM:
+> #   To perform EDA on the iris dataset: dimensions, summary, standard deviation, quantiles, grouping by Species, pivot table and categorical grouping of Sepal.Length.
+> #
+> # PSEUDOCODE:
+> #   1. Start
+> #   2. Load iris and display dimensions, head and summary
+> #   3. Find standard deviation of numeric columns using sapply()
+> #   4. Find quantiles of Sepal.Length
+> #   5. Group by Species and compute mean using aggregate()
+> #   6. Create pivot table using tapply()
+> #   7. Create Sepal.Length categories using cut() and tabulate with Species
+> #   8. Stop
+> #
+> # SAMPLE INPUT:
+> #   Dataset: iris (built-in)
+> #
+> # SAMPLE OUTPUT:
+> #   Dimensions: 150 5 
+> #
+> #     Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+> #   1          5.1         3.5          1.4         0.2  setosa
+> #   2          4.9         3.0          1.4         0.2  setosa
+> #   3          4.7         3.2          1.3         0.2  setosa
+> #   4          4.6         3.1          1.5         0.2  setosa
+> #   5          5.0         3.6          1.4         0.2  setosa
+> #   6          5.4         3.9          1.7         0.4  setosa
+> #
+> #   Summary:
+> #     Sepal.Length    Sepal.Width     Petal.Length    Petal.Width   
+> #    Min.   :4.300   Min.   :2.000   Min.   :1.000   Min.   :0.100  
+> #    1st Qu.:5.100   1st Qu.:2.800   1st Qu.:1.600   1st Qu.:0.300  
+> #    Median :5.800   Median :3.000   Median :4.350   Median :1.300  
+> #    Mean   :5.843   Mean   :3.057   Mean   :3.758   Mean   :1.199  
+> #    3rd Qu.:6.400   3rd Qu.:3.300   3rd Qu.:5.100   3rd Qu.:1.800  
+> #    Max.   :7.900   Max.   :4.400   Max.   :6.900   Max.   :2.500  
+> #          Species  
+> #    setosa    :50  
+> #    versicolor:50  
+> #    virginica :50  
+> #
+> #
+> #
+> #
+> #   Standard deviation:
+> #   Sepal.Length  Sepal.Width Petal.Length  Petal.Width 
+> #      0.8280661    0.4358663    1.7652982    0.7622377 
+> #
+> #   Quantiles of Sepal.Length:
+> #     0%  25%  50%  75% 100% 
+> #    4.3  5.1  5.8  6.4  7.9 
+> #
+> #   Mean of each variable grouped by Species:
+> #        Species Sepal.Length Sepal.Width Petal.Length Petal.Width
+> #   1     setosa        5.006       3.428        1.462       0.246
+> #   2 versicolor        5.936       2.770        4.260       1.326
+> #   3  virginica        6.588       2.974        5.552       2.026
+> #
+> #   Pivot table (mean Petal.Length by Species):
+> #       setosa versicolor  virginica 
+> #        1.462      4.260      5.552 
+> #
+> #   Sepal.Length categories:
+> #
+> #                Short Medium Long
+> #     setosa        47      3    0
+> #     versicolor    11     31    8
+> #     virginica      1     27   22
+> #
+> # ======================================================================
+> # PROGRAM
+> # ======================================================================
+> 
+> data(iris)
+> cat("Dimensions:", dim(iris), "\n\n")
+Dimensions: 150 5 
+
+> print(head(iris))
+  Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+1          5.1         3.5          1.4         0.2  setosa
+2          4.9         3.0          1.4         0.2  setosa
+3          4.7         3.2          1.3         0.2  setosa
+4          4.6         3.1          1.5         0.2  setosa
+5          5.0         3.6          1.4         0.2  setosa
+6          5.4         3.9          1.7         0.4  setosa
+> 
+> cat("\nSummary:\n")
+
+Summary:
+> print(summary(iris))
+  Sepal.Length    Sepal.Width     Petal.Length    Petal.Width   
+ Min.   :4.300   Min.   :2.000   Min.   :1.000   Min.   :0.100  
+ 1st Qu.:5.100   1st Qu.:2.800   1st Qu.:1.600   1st Qu.:0.300  
+ Median :5.800   Median :3.000   Median :4.350   Median :1.300  
+ Mean   :5.843   Mean   :3.057   Mean   :3.758   Mean   :1.199  
+ 3rd Qu.:6.400   3rd Qu.:3.300   3rd Qu.:5.100   3rd Qu.:1.800  
+ Max.   :7.900   Max.   :4.400   Max.   :6.900   Max.   :2.500  
+       Species  
+ setosa    :50  
+ versicolor:50  
+ virginica :50  
+                
+                
+                
+> 
+> cat("\nStandard deviation:\n")
+
+Standard deviation:
+> print(sapply(iris[, 1:4], sd))
+Sepal.Length  Sepal.Width Petal.Length  Petal.Width 
+   0.8280661    0.4358663    1.7652982    0.7622377 
+> 
+> cat("\nQuantiles of Sepal.Length:\n")
+
+Quantiles of Sepal.Length:
+> print(quantile(iris$Sepal.Length))
+  0%  25%  50%  75% 100% 
+ 4.3  5.1  5.8  6.4  7.9 
+> 
+> cat("\nMean of each variable grouped by Species:\n")
+
+Mean of each variable grouped by Species:
+> print(aggregate(. ~ Species, data = iris, FUN = mean))
+     Species Sepal.Length Sepal.Width Petal.Length Petal.Width
+1     setosa        5.006       3.428        1.462       0.246
+2 versicolor        5.936       2.770        4.260       1.326
+3  virginica        6.588       2.974        5.552       2.026
+> 
+> cat("\nPivot table (mean Petal.Length by Species):\n")
+
+Pivot table (mean Petal.Length by Species):
+> print(tapply(iris$Petal.Length, iris$Species, mean))
+    setosa versicolor  virginica 
+     1.462      4.260      5.552 
+> 
+> cat("\nSepal.Length categories:\n")
+
+Sepal.Length categories:
+> iris$SL_cat <- cut(iris$Sepal.Length, breaks = c(0, 5.5, 6.5, 10),
++                    labels = c("Short", "Medium", "Long"))
+> print(table(iris$Species, iris$SL_cat))
+            
+             Short Medium Long
+  setosa        47      3    0
+  versicolor    11     31    8
+  virginica      1     27   22
+> 
+> # ======================================================================
+> # RESULT:
+> #   EDA on the iris dataset was completed and all the statistics were displayed successfully.
+> # ======================================================================
+> # ======================================================================
+> # ITA04 STATISTICS WITH R PROGRAMMING - LAB EXPERIMENT 16
+> # USARRESTS DATASET EXPLORATION
+> # ======================================================================
+> #
+> # AIM:
+> #   To explore the USArrests dataset: summary, state with largest Rape arrests, max/min Murder rates, correlation, filtering and visualization.
+> #
+> # PSEUDOCODE:
+> #   1. Start
+> #   2. Load USArrests and display summary
+> #   3. Find state with maximum Rape value using which.max()
+> #   4. Find states with maximum and minimum Murder rate
+> #   5. Find correlation matrix using cor()
+> #   6. Filter states with Assault above median and Murder in bottom 25%
+> #   7. Plot histogram, density, scatter plot and bar graph
+> #   8. Stop
+> #
+> # SAMPLE INPUT:
+> #   Dataset: USArrests (built-in)
+> #
+> # SAMPLE OUTPUT:
+> #              Murder Assault UrbanPop Rape
+> #   Alabama      13.2     236       58 21.2
+> #   Alaska       10.0     263       48 44.5
+> #   Arizona       8.1     294       80 31.0
+> #   Arkansas      8.8     190       50 19.5
+> #   California    9.0     276       91 40.6
+> #   Colorado      7.9     204       78 38.7
+> #
+> #   Summary:
+> #        Murder          Assault         UrbanPop          Rape      
+> #    Min.   : 0.800   Min.   : 45.0   Min.   :32.00   Min.   : 7.30  
+> #    1st Qu.: 4.075   1st Qu.:109.0   1st Qu.:54.50   1st Qu.:15.07  
+> #    Median : 7.250   Median :159.0   Median :66.00   Median :20.10  
+> #    Mean   : 7.788   Mean   :170.8   Mean   :65.54   Mean   :21.23  
+> #    3rd Qu.:11.250   3rd Qu.:249.0   3rd Qu.:77.75   3rd Qu.:26.18  
+> #    Max.   :17.400   Max.   :337.0   Max.   :91.00   Max.   :46.00  
+> #
+> #   State with largest Rape arrests: Nevada 
+> #   State with maximum Murder rate : Georgia ( 17.4 )
+> #   State with minimum Murder rate : North Dakota ( 0.8 )
+> #
+> #   Correlation among features:
+> #            Murder Assault UrbanPop Rape
+> #   Murder     1.00    0.80     0.07 0.56
+> #   Assault    0.80    1.00     0.26 0.67
+> #   UrbanPop   0.07    0.26     1.00 0.41
+> #   Rape       0.56    0.67     0.41 1.00
+> #
+> #   States with Assault above median:
+> #    [1] "Alabama"        "Alaska"         "Arizona"        "Arkansas"      
+> #    [5] "California"     "Colorado"       "Delaware"       "Florida"       
+> #    [9] "Georgia"        "Illinois"       "Louisiana"      "Maryland"      
+> #   [13] "Michigan"       "Mississippi"    "Missouri"       "Nevada"        
+> #   [17] "New Mexico"     "New York"       "North Carolina" "Rhode Island"  
+> #   [21] "South Carolina" "Tennessee"      "Texas"          "Wyoming"       
+> #
+> #   States in bottom 25% for Murder:
+> #    [1] "Connecticut"   "Idaho"         "Iowa"          "Maine"        
+> #    [5] "Minnesota"     "New Hampshire" "North Dakota"  "Rhode Island" 
+> #    [9] "South Dakota"  "Utah"          "Vermont"       "Washington"   
+> #   [13] "Wisconsin"
+> #   [4 plots appear in the R Graphics window]
+> #
+> # ======================================================================
+> # PROGRAM
+> # ======================================================================
+> 
+> data(USArrests)
+> print(head(USArrests))
+           Murder Assault UrbanPop Rape
+Alabama      13.2     236       58 21.2
+Alaska       10.0     263       48 44.5
+Arizona       8.1     294       80 31.0
+Arkansas      8.8     190       50 19.5
+California    9.0     276       91 40.6
+Colorado      7.9     204       78 38.7
+> cat("\nSummary:\n"); print(summary(USArrests))
+
+Summary:
+     Murder          Assault         UrbanPop          Rape      
+ Min.   : 0.800   Min.   : 45.0   Min.   :32.00   Min.   : 7.30  
+ 1st Qu.: 4.075   1st Qu.:109.0   1st Qu.:54.50   1st Qu.:15.07  
+ Median : 7.250   Median :159.0   Median :66.00   Median :20.10  
+ Mean   : 7.788   Mean   :170.8   Mean   :65.54   Mean   :21.23  
+ 3rd Qu.:11.250   3rd Qu.:249.0   3rd Qu.:77.75   3rd Qu.:26.18  
+ Max.   :17.400   Max.   :337.0   Max.   :91.00   Max.   :46.00  
+> 
+> cat("\nState with largest Rape arrests:", rownames(USArrests)[which.max(USArrests$Rape)], "\n")
+
+State with largest Rape arrests: Nevada 
+> cat("State with maximum Murder rate :", rownames(USArrests)[which.max(USArrests$Murder)],
++     "(", max(USArrests$Murder), ")\n")
+State with maximum Murder rate : Georgia ( 17.4 )
+> cat("State with minimum Murder rate :", rownames(USArrests)[which.min(USArrests$Murder)],
++     "(", min(USArrests$Murder), ")\n")
+State with minimum Murder rate : North Dakota ( 0.8 )
+> 
+> cat("\nCorrelation among features:\n")
+
+Correlation among features:
+> print(round(cor(USArrests), 2))
+         Murder Assault UrbanPop Rape
+Murder     1.00    0.80     0.07 0.56
+Assault    0.80    1.00     0.26 0.67
+UrbanPop   0.07    0.26     1.00 0.41
+Rape       0.56    0.67     0.41 1.00
+> 
+> cat("\nStates with Assault above median:\n")
+
+States with Assault above median:
+> print(rownames(USArrests)[USArrests$Assault > median(USArrests$Assault)])
+ [1] "Alabama"        "Alaska"         "Arizona"        "Arkansas"      
+ [5] "California"     "Colorado"       "Delaware"       "Florida"       
+ [9] "Georgia"        "Illinois"       "Louisiana"      "Maryland"      
+[13] "Michigan"       "Mississippi"    "Missouri"       "Nevada"        
+[17] "New Mexico"     "New York"       "North Carolina" "Rhode Island"  
+[21] "South Carolina" "Tennessee"      "Texas"          "Wyoming"       
+> 
+> cat("\nStates in bottom 25% for Murder:\n")
+
+States in bottom 25% for Murder:
+> print(rownames(USArrests)[USArrests$Murder <= quantile(USArrests$Murder, 0.25)])
+ [1] "Connecticut"   "Idaho"         "Iowa"          "Maine"        
+ [5] "Minnesota"     "New Hampshire" "North Dakota"  "Rhode Island" 
+ [9] "South Dakota"  "Utah"          "Vermont"       "Washington"   
+[13] "Wisconsin"    
+> 
+> # Visualization
+> par(mfrow = c(2, 2))
+> hist(USArrests$Murder, main = "Histogram of Murder", xlab = "Murder", col = "skyblue")
+> plot(density(USArrests$Assault), main = "Density of Assault", col = "red")
+> plot(USArrests$Assault, USArrests$Murder, main = "Assault vs Murder",
++      xlab = "Assault", ylab = "Murder", pch = 19, col = "blue")
+> barplot(head(USArrests$Murder, 10), names.arg = head(rownames(USArrests), 10),
++         las = 2, main = "Murder rate (first 10 states)", col = "orange")
+> par(mfrow = c(1, 1))
+> 
+> # ======================================================================
+> # RESULT:
+> #   USArrests data was explored with summary statistics, correlation, filtering and four plots successfully.
+> # ======================================================================
+> # ======================================================================
+> # ITA04 STATISTICS WITH R PROGRAMMING - LAB EXPERIMENT 17
+> # TITANIC DATASET VISUALIZATION
+> # ======================================================================
+> #
+> # AIM:
+> #   To explore the Titanic dataset: bar chart of survival vs class, modify the plot by gender and draw a histogram of Age.
+> #
+> # PSEUDOCODE:
+> #   1. Start
+> #   2. Read titanic.csv (kept in the same folder; falls back to a GitHub copy)
+> #   3. Create table of Survived vs Pclass and draw bar chart
+> #   4. Create table of Survived vs Sex and draw grouped bar chart
+> #   5. Draw histogram of Age (ignoring NA values)
+> #   6. Stop
+> #
+> # SAMPLE INPUT:
+> #   File: titanic.csv (891 passengers) - keep it in the working directory
+> #
+> # SAMPLE OUTPUT:
+> #   Rows: 891  Columns: 12 
+> #           Class
+> #   Survived   1   2   3
+> #          0  80  97 372
+> #          1 136  87 119
+> #           Sex
+> #   Survived female male
+> #          0     81  468
+> #          1    233  109
+> #   Mean age: 29.7
+> #   [Graph(s) appear in the R Graphics window]
+> #
+> # ======================================================================
+> # PROGRAM
+> # ======================================================================
+> 
+> if (file.exists("titanic.csv")) {
++   titanic <- read.csv("titanic.csv")
++ } else {
++   titanic <- read.csv("https://raw.githubusercontent.com/datasciencedojo/datasets/master/titanic.csv")
++ }
+> cat("Rows:", nrow(titanic), " Columns:", ncol(titanic), "\n")
+Rows: 891  Columns: 12 
+> 
+> # Bar chart: Survival vs Class
+> t1 <- table(Survived = titanic$Survived, Class = titanic$Pclass)
+> print(t1)
+        Class
+Survived   1   2   3
+       0  80  97 372
+       1 136  87 119
+> barplot(t1, beside = TRUE, col = c("tomato", "seagreen"),
++         main = "Survival by Passenger Class", xlab = "Class", ylab = "Passengers",
++         legend.text = c("Died", "Survived"))
+> 
+> # Modified plot: by gender
+> t2 <- table(Survived = titanic$Survived, Sex = titanic$Sex)
+> print(t2)
+        Sex
+Survived female male
+       0     81  468
+       1    233  109
+> barplot(t2, beside = TRUE, col = c("tomato", "seagreen"),
++         main = "Survival by Gender", xlab = "Gender", ylab = "Passengers",
++         legend.text = c("Died", "Survived"))
+> 
+> # Histogram of Age
+> hist(titanic$Age, breaks = 15, col = "skyblue", main = "Histogram of Age", xlab = "Age")
+> cat("Mean age:", round(mean(titanic$Age, na.rm = TRUE), 2), "\n")
+Mean age: 29.7 
+> 
+> # ======================================================================
+> # RESULT:
+> #   Bar charts of survival by class and gender and a histogram of Age were drawn successfully (see the Graphics window).
+> # ======================================================================
+> 
+> if (file.exists("titanic.csv")) {
++   titanic <- read.csv("titanic.csv")
++ } else {
++   titanic <- read.csv("https://raw.githubusercontent.com/datasciencedojo/datasets/master/titanic.csv")
++ }
+Error in file(file, "rt") : 
+  cannot open the connection to 'https://raw.githubusercontent.com/datasciencedojo/datasets/master/titanic.csv'
+In addition: Warning message:
+In file(file, "rt") :
+  URL 'https://raw.githubusercontent.com/datasciencedojo/datasets/master/titanic.csv': status was 'Could not resolve hostname'
+> cat("Rows:", nrow(titanic), " Columns:", ncol(titanic), "\n")
+Rows: 891  Columns: 12 
+> 
+> # Bar chart: Survival vs Class
+> t1 <- table(Survived = titanic$Survived, Class = titanic$Pclass)
+> print(t1)
+        Class
+Survived   1   2   3
+       0  80  97 372
+       1 136  87 119
+> barplot(t1, beside = TRUE, col = c("tomato", "seagreen"),
++         main = "Survival by Passenger Class", xlab = "Class", ylab = "Passengers",
++         legend.text = c("Died", "Survived")
++ # Modified plot: by gender
++ t2 <- table(Survived = titanic$Survived, Sex = titanic$Sex)
+Error: unexpected symbol in:
+"# Modified plot: by gender
+t2"
+> print(t2)
+        Sex
+Survived female male
+       0     81  468
+       1    233  109
+> barplot(t2, beside = TRUE, col = c("tomato", "seagreen"),
++         main = "Survival by Gender", xlab = "Gender", ylab = "Passengers",
++         legend.text = c("Died", "Survived"))
+> 
+> # Histogram of Age
+> hist(titanic$Age, breaks = 15, col = "skyblue", main = "Histogram of Age", xlab = "Age")
+> cat("Mean age:", round(mean(titanic$Age, na.rm = TRUE), 2), "\n")
+Mean age: 29.7 
+> 
+> # ======================================================================
+> # ITA04 STATISTICS WITH R PROGRAMMING - LAB EXPERIMENT 18
+> # BASIC GRAPHS IN R
+> # ======================================================================
+> #
+> # AIM:
+> #   To create a boxplot, histogram, bar plot, line chart and scatter plot in R.
+> #
+> # PSEUDOCODE:
+> #   1. Start
+> #   2. Take sample data (mtcars and simple vectors)
+> #   3. Draw boxplot using boxplot()
+> #   4. Draw histogram using hist()
+> #   5. Draw bar plot using barplot()
+> #   6. Draw line chart using plot(type = "o")
+> #   7. Draw scatter plot using plot()
+> #   8. Stop
+> #
+> # SAMPLE INPUT:
+> #   Dataset: mtcars (built-in) and months/sales vectors
+> #
+> # SAMPLE OUTPUT:
+> #   Five graphs created.
+> #   [Graph(s) appear in the R Graphics window]
+> #
+> # ======================================================================
+> # PROGRAM
+> # ======================================================================
+> 
+> par(mfrow = c(2, 3))
+> 
+> boxplot(mpg ~ cyl, data = mtcars, main = "Boxplot", xlab = "Cylinders",
++         ylab = "Mileage", col = "lightblue")
+> 
+> hist(mtcars$mpg, main = "Histogram", xlab = "Mileage", col = "orange")
+> 
+> counts <- table(mtcars$gear)
+> barplot(counts, main = "Bar Plot", xlab = "Gears", ylab = "Cars", col = "green")
+> 
+> sales <- c(20, 35, 30, 45, 60, 55)
+> plot(1:6, sales, type = "o", main = "Line Chart", xlab = "Month", ylab = "Sales", col = "red")
+> 
+> plot(mtcars$wt, mtcars$mpg, main = "Scatter Plot", xlab = "Weight", ylab = "Mileage",
++      pch = 19, col = "blue")
+> 
+> par(mfrow = c(1, 1))
+> cat("Five graphs created.\n")
+Five graphs created.
+> 
+> # ======================================================================
+> # RESULT:
+> #   Boxplot, histogram, bar plot, line chart and scatter plot were created successfully (see the Graphics window).
+> # ======================================================================
+> par(mfrow = c(2, 3))
+> 
+> boxplot(mpg ~ cyl, data = mtcars, main = "Boxplot", xlab = "Cylinders",
++         ylab = "Mileage", col = "lightblue")
+> hist(mtcars$mpg, main = "Histogram", xlab = "Mileage", col = "orange")
+> par(mfrow = c(2, 3))
+> 
+> boxplot(mpg ~ cyl, data = mtcars, main = "Boxplot", xlab = "Cylinders",
++         ylab = "Mileage", col = "lightblue")
+> 
+> hist(mtcars$mpg, main = "Histogram", xlab = "Mileage", col = "orange")
+> 
+> counts <- table(mtcars$gear)
+> barplot(counts, main = "Bar Plot", xlab = "Gears", ylab = "Cars", col = "green")
+> 
+> sales <- c(20, 35, 30, 45, 60, 55)
+> plot(1:6, sales, type = "o", main = "Line Chart", xlab = "Month", ylab = "Sales", col = "red")
+> 
+> plot(mtcars$wt, mtcars$mpg, main = "Scatter Plot", xlab = "Weight", ylab = "Mileage",
++      pch = 19, col = "blue")
+> 
+> par(mfrow = c(1, 1))
+> cat("Five graphs created.\n")
+Five graphs created.
+> # ======================================================================
+There were 50 or more warnings (use warnings() to see the first 50)
+> # ITA04 STATISTICS WITH R PROGRAMMING - LAB EXPERIMENT 19
+> # SIMPLE LINEAR REGRESSION (SALES ~ SPEND)
+> # ======================================================================
+> #
+> # AIM:
+> #   To build a simple regression model on an advertising dataset (Sales ~ Spend) and predict Sales.
+> #
+> # PSEUDOCODE:
+> #   1. Start
+> #   2. Create advertising data frame with Spend and Sales
+> #   3. Build model using lm(Sales ~ Spend)
+> #   4. Display model summary (coefficients, R-squared)
+> #   5. Predict Sales for new Spend value using predict()
+> #   6. Plot data with regression line
+> #   7. Stop
+> #
+> # SAMPLE INPUT:
+> #   Spend = 10,20,30,40,50,60,70,80,90,100 | Sales = 25,32,41,48,57,66,71,82,90,98 | New Spend = 120
+> #
+> # SAMPLE OUTPUT:
+> #
+> #   Call:
+> #   lm(formula = Sales ~ Spend, data = advertising)
+> #
+> #   Residuals:
+> #       Min      1Q  Median      3Q     Max 
+> #   -2.2364 -0.3167  0.3424  0.5667  0.9212 
+> #
+> #   Coefficients:
+> #               Estimate Std. Error t value Pr(>|t|)    
+> #   (Intercept) 16.13333    0.68106   23.69 1.07e-08 ***
+> #   Spend        0.81576    0.01098   74.32 1.20e-12 ***
+> #   ---
+> #   Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+> #
+> #   Residual standard error: 0.997 on 8 degrees of freedom
+> #   Multiple R-squared:  0.9986,Adjusted R-squared:  0.9984 
+> #   F-statistic:  5524 on 1 and 8 DF,  p-value: 1.197e-12
+> #
+> #
+> #   Coefficients:
+> #   (Intercept)       Spend 
+> #    16.1333333   0.8157576 
+> #
+> #   Predicted Sales for Spend = 120 : 114.02
+> #
+> # ======================================================================
+> # PROGRAM
+> # ======================================================================
+> 
+> advertising <- data.frame(
++   Spend = c(10, 20, 30, 40, 50, 60, 70, 80, 90, 100),
++   Sales = c(25, 32, 41, 48, 57, 66, 71, 82, 90, 98)
++ )
+> 
+> model <- lm(Sales ~ Spend, data = advertising)
+> print(summary(model))
+
+Call:
+lm(formula = Sales ~ Spend, data = advertising)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-2.2364 -0.3167  0.3424  0.5667  0.9212 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 16.13333    0.68106   23.69 1.07e-08 ***
+Spend        0.81576    0.01098   74.32 1.20e-12 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.997 on 8 degrees of freedom
+Multiple R-squared:  0.9986,    Adjusted R-squared:  0.9984 
+F-statistic:  5524 on 1 and 8 DF,  p-value: 1.197e-12
+
+> 
+> cat("\nCoefficients:\n")
+
+Coefficients:
+> print(coef(model))
+(Intercept)       Spend 
+ 16.1333333   0.8157576 
+> 
+> new_data <- data.frame(Spend = 120)
+> pred <- predict(model, new_data)
+> cat("\nPredicted Sales for Spend = 120 :", round(pred, 2), "\n")
+
+Predicted Sales for Spend = 120 : 114.02 
+> 
+> plot(advertising$Spend, advertising$Sales, pch = 19, col = "blue",
++      main = "Sales vs Spend", xlab = "Spend", ylab = "Sales")
+> abline(model, col = "red", lwd = 2)
+> 
+> # ======================================================================
+> # RESULT:
+> #   A regression model was built, Sales for Spend = 120 was predicted and the fitted line was plotted successfully.
+> # ======================================================================
+> 
+> # ======================================================================
+> # ITA04 STATISTICS WITH R PROGRAMMING - LAB EXPERIMENT 20
+> # MULTIPLE REGRESSION ON CHICKWEIGHT
+> # ======================================================================
+> #
+> # AIM:
+> #   To create a multiple regression model on ChickWeight with Time and Diet as predictors, predict weight and compute model error.
+> #
+> # PSEUDOCODE:
+> #   1. Start
+> #   2. Load ChickWeight as a data frame
+> #   3. Build model using lm(weight ~ Time + Diet)
+> #   4. Display model summary
+> #   5. Predict weight for all records and for a new chick (Time = 10, Diet = 1)
+> #   6. Compute error: residuals, RMSE and MAE
+> #   7. Stop
+> #
+> # SAMPLE INPUT:
+> #   Dataset: ChickWeight (built-in) | New data: Time = 10, Diet = 1
+> #
+> # SAMPLE OUTPUT:
+> #
+> #   Call:
+> #   lm(formula = weight ~ Time + Diet, data = cw)
+> #
+> #   Residuals:
+> #        Min       1Q   Median       3Q      Max 
+> #   -136.851  -17.151   -2.595   15.033  141.816 
+> #
+> #   Coefficients:
+> #               Estimate Std. Error t value Pr(>|t|)    
+> #   (Intercept)  10.9244     3.3607   3.251  0.00122 ** 
+> #   Time          8.7505     0.2218  39.451  < 2e-16 ***
+> #   Diet2        16.1661     4.0858   3.957 8.56e-05 ***
+> #   Diet3        36.4994     4.0858   8.933  < 2e-16 ***
+> #   Diet4        30.2335     4.1075   7.361 6.39e-13 ***
+> #   ---
+> #   Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+> #
+> #   Residual standard error: 35.99 on 573 degrees of freedom
+> #   Multiple R-squared:  0.7453,Adjusted R-squared:  0.7435 
+> #   F-statistic: 419.2 on 4 and 573 DF,  p-value: < 2.2e-16
+> #
+> #
+> #   Predicted weight (Time=10, Diet=1): 98.43 
+> #
+> #   RMSE : 35.84 
+> #   MAE  : 25 
+> #   R-squared: 0.7453
+> #
+> # ======================================================================
+> # PROGRAM
+> # ======================================================================
+> 
+> cw <- as.data.frame(ChickWeight)
+> 
+> model <- lm(weight ~ Time + Diet, data = cw)
+> print(summary(model))
+
+Call:
+lm(formula = weight ~ Time + Diet, data = cw)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-136.851  -17.151   -2.595   15.033  141.816 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  10.9244     3.3607   3.251  0.00122 ** 
+Time          8.7505     0.2218  39.451  < 2e-16 ***
+Diet2        16.1661     4.0858   3.957 8.56e-05 ***
+Diet3        36.4994     4.0858   8.933  < 2e-16 ***
+Diet4        30.2335     4.1075   7.361 6.39e-13 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 35.99 on 573 degrees of freedom
+Multiple R-squared:  0.7453,    Adjusted R-squared:  0.7435 
+F-statistic: 419.2 on 4 and 573 DF,  p-value: < 2.2e-16
+
+> 
+> # Prediction for a new chick
+> new_chick <- data.frame(Time = 10, Diet = factor("1", levels = levels(cw$Diet)))
+> cat("\nPredicted weight (Time=10, Diet=1):", round(predict(model, new_chick), 2), "\n")
+
+Predicted weight (Time=10, Diet=1): 98.43 
+> 
+> # Model error
+> pred <- predict(model, cw)
+> error <- cw$weight - pred
+> rmse <- sqrt(mean(error^2))
+> mae  <- mean(abs(error))
+> 
+> cat("\nRMSE :", round(rmse, 2), "\n")
+
+RMSE : 35.84 
+> cat("MAE  :", round(mae, 2), "\n")
+MAE  : 25 
+> cat("R-squared:", round(summary(model)$r.squared, 4), "\n")
+R-squared: 0.7453 
+> 
+> # ======================================================================
+> # RESULT:
+> #   The multiple regression model was built, weight was predicted and the model error (RMSE, MAE) was computed successfully.
+> # ======================================================================
+> 
+> # ======================================================================
+> # ITA04 STATISTICS WITH R PROGRAMMING - LAB EXPERIMENT 21
+> # LOGISTIC REGRESSION ON IRIS WITH TRAIN/TEST SPLIT
+> # ======================================================================
+> #
+> # AIM:
+> #   To split iris randomly into train/test (80/20), build a logistic regression (Species ~ Petal.Length + Petal.Width), predict and evaluate with a confusion matrix.
+> #
+> # PSEUDOCODE:
+> #   1. Start
+> #   2. Set seed and randomly select 80% of rows for training, 20% for testing
+> #   3. Build logistic regression on training data (multinom handles 3 species)
+> #   4. Predict Species on test data
+> #   5. Create confusion matrix using table(Actual, Predicted)
+> #   6. Compute accuracy = correct / total
+> #   7. Stop
+> #
+> # SAMPLE INPUT:
+> #   Dataset: iris (built-in) | Split: 80% train (120 rows), 20% test (30 rows) | set.seed(123)
+> #
+> # SAMPLE OUTPUT:
+> #   Training rows: 120  Testing rows: 30 
+> #              (Intercept) Petal.Length Petal.Width
+> #   versicolor   -22.80429     6.592006    8.275971
+> #   virginica    -68.83031    12.810970   18.028532
+> #
+> #   Confusion Matrix:
+> #               Predicted
+> #   Actual       setosa versicolor virginica
+> #     setosa         10          0         0
+> #     versicolor      0         14         1
+> #     virginica       0          0         5
+> #
+> #   Accuracy: 96.67 %
+> #
+> # ======================================================================
+> # PROGRAM
+> # ======================================================================
+> 
+> # NOTE: glm(family = binomial) works only for 2 classes. Iris has 3 species,
+> # so multinomial logistic regression (nnet::multinom) is used.
+> library(nnet)
+> 
+> set.seed(123)
+> idx   <- sample(1:nrow(iris), 0.8 * nrow(iris))
+> train <- iris[idx, ]
+> test  <- iris[-idx, ]
+> cat("Training rows:", nrow(train), " Testing rows:", nrow(test), "\n")
+Training rows: 120  Testing rows: 30 
+> 
+> model <- multinom(Species ~ Petal.Length + Petal.Width, data = train, trace = FALSE)
+> print(summary(model)$coefficients)
+           (Intercept) Petal.Length Petal.Width
+versicolor   -22.80429     6.592006    8.275971
+virginica    -68.83031    12.810970   18.028532
+> 
+> pred <- predict(model, test)
+> 
+> cm <- table(Actual = test$Species, Predicted = pred)
+> cat("\nConfusion Matrix:\n")
+
+Confusion Matrix:
+> print(cm)
+            Predicted
+Actual       setosa versicolor virginica
+  setosa         10          0         0
+  versicolor      0         14         1
+  virginica       0          0         5
+> 
+> accuracy <- sum(diag(cm)) / sum(cm)
+> cat("\nAccuracy:", round(accuracy * 100, 2), "%\n")
+
+Accuracy: 96.67 %
+> 
+> # ======================================================================
+> # RESULT:
+> #   The train/test split, logistic regression model, prediction and confusion matrix evaluation were completed successfully.
+> # ======================================================================
+> 

@@ -1,0 +1,8 @@
+# Q3: Matrix addition, subtraction, multiplication
+A <- matrix(1:16, nrow = 4, ncol = 4, byrow = TRUE)
+B <- matrix(16:1, nrow = 4, ncol = 4, byrow = TRUE)
+cat("Matrix A:\n"); print(A)
+cat("\nMatrix B:\n"); print(B)
+cat("\nA + B:\n"); print(A + B)
+cat("\nA - B:\n"); print(A - B)
+cat("\nA x B (matrix multiplication):\n"); print(A %*% B)

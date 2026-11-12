@@ -1,0 +1,39 @@
+# Q1: Making Data Frames - unequal sensor vectors (diagnose, then pad with NA)
+set.seed(101)
+sensor_id <- paste0("S", sprintf("%03d", 1:120))                         # N1 = 120 (character)
+voltage   <- round(rnorm(119, mean = 3.3, sd = 0.15), 3)                  # N2 = 119 (numeric)
+status    <- sample(c(TRUE, FALSE), 120, replace = TRUE, prob = c(0.9, 0.1)) # N3 = 120 (logical)
+
+# Step 1: direct construction fails
+cat("Direct data.frame() call result:\n")
+direct <- tryCatch(data.frame(sensor_id, voltage, status),
+                   error = function(e) conditionMessage(e))
+print(direct)
+
+# Step 2: routine that reports the discrepancy and then pads with NA
+diagnose_and_pad <- function(cols) {
+  lens    <- sapply(cols, length)
+  max_len <- max(lens)
+  cat("\n---- DIAGNOSTIC DISCREPANCY REPORT ----\n")
+  report <- data.frame(Vector = names(cols), Class = sapply(cols, class),
+                       Length = lens, Missing = max_len - lens, row.names = NULL)
+  print(report)
+  cat("Target length (longest vector):", max_len, "\n")
+  for (nm in names(cols)) {
+    if (lens[nm] < max_len) {
+      miss <- (lens[nm] + 1):max_len
+      cat("Vector '", nm, "' is short by ", length(miss),
+          " element(s); missing index position(s): ", paste(miss, collapse = ", "), "\n", sep = "")
+      cat("Can R recycle it automatically? ", max_len %% lens[nm] == 0, "\n")
+    }
+  }
+  padded <- lapply(cols, function(v) { length(v) <- max_len; v })  # pads with NA, keeps type
+  data.frame(padded, stringsAsFactors = FALSE)
+}
+
+df <- diagnose_and_pad(list(sensor_id = sensor_id, voltage = voltage, status = status))
+
+cat("\nRectified data frame dimensions:", dim(df), "\n")
+cat("\nStructure:\n"); str(df)
+cat("\nNA count per column:\n"); print(colSums(is.na(df)))
+cat("\nLast 3 rows (padded NA visible):\n"); print(tail(df, 3))

@@ -1,0 +1,12 @@
+# Q29: Function returning min, max and average as a list
+stats_fn <- function(x) {
+  return(list(minimum = min(x), maximum = max(x), average = mean(x)))
+}
+
+data <- c(23, 45, 12, 67, 34, 89, 56)
+res <- stats_fn(data)
+cat("Data:", data, "\n")
+print(res)
+cat("Minimum:", res$minimum, "\n")
+cat("Maximum:", res$maximum, "\n")
+cat("Average:", res$average, "\n")

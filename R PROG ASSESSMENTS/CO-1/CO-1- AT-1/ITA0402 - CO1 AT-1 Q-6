@@ -1,0 +1,20 @@
+# Q6: Hospital Patient Data Analysis (Data Frame)
+patients <- data.frame(
+  PatientID     = 1:10,
+  Age           = c(25, 67, 45, 72, 34, 61, 58, 80, 29, 64),
+  Gender        = c("M","F","F","M","F","M","F","M","F","M"),
+  TreatmentCost = c(12000, 45000, 20000, 60000, 15000, 38000,
+                    25000, 75000, 11000, 42000)
+)
+cat("Patient Data:\n"); print(patients)
+
+cat("\nAverage Treatment Cost:", mean(patients$TreatmentCost), "\n")
+
+cat("\nPatients above 60 years:\n")
+print(patients[patients$Age > 60, ])
+
+cat("\nStatistical Summary:\n"); print(summary(patients))
+
+cat("\nAverage Cost by Gender:\n")
+print(tapply(patients$TreatmentCost, patients$Gender, mean))
+cat("\nStd Deviation of Cost:", round(sd(patients$TreatmentCost), 2), "\n")

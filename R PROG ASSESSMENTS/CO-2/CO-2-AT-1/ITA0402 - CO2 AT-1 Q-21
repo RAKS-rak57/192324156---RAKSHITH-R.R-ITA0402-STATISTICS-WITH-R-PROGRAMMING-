@@ -1,0 +1,8 @@
+# Q21: Factor variable, levels and frequency table
+blood <- c("A+", "B+", "O+", "AB+", "O+", "A+", "B-", "O+", "A-", "AB+", "B+", "O-")
+bg_factor <- factor(blood)
+
+cat("Factor:\n"); print(bg_factor)
+cat("\nLevels:", levels(bg_factor), "\n")
+cat("Number of levels:", nlevels(bg_factor), "\n")
+cat("\nFrequency Table:\n"); print(table(bg_factor))

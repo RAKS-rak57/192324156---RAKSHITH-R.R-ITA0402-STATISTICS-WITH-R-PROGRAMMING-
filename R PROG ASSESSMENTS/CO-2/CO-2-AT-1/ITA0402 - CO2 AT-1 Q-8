@@ -1,0 +1,17 @@
+# Q8: Recursive factorial and GCD
+factorial_rec <- function(n) {
+  if (n < 0) return(NA)
+  if (n == 0 || n == 1) return(1)
+  return(n * factorial_rec(n - 1))
+}
+
+gcd_rec <- function(a, b) {
+  if (b == 0) return(a)
+  return(gcd_rec(b, a %% b))
+}
+
+cat("Factorial of 5  :", factorial_rec(5), "\n")
+cat("Factorial of 0  :", factorial_rec(0), "\n")
+cat("Factorial of 7  :", factorial_rec(7), "\n")
+cat("GCD of 48 and 18:", gcd_rec(48, 18), "\n")
+cat("GCD of 100 and 75:", gcd_rec(100, 75), "\n")

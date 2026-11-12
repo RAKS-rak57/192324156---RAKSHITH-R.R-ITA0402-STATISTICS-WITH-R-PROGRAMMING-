@@ -1,0 +1,10 @@
+# Q27: Even numbers 1-50, skipping multiples of 10 (while + break/next)
+i <- 0
+while (TRUE) {
+  i <- i + 1
+  if (i > 50) break            # stop after 50
+  if (i %% 2 != 0) next        # skip odd numbers
+  if (i %% 10 == 0) next       # skip multiples of 10
+  cat(i, " ")
+}
+cat("\n")

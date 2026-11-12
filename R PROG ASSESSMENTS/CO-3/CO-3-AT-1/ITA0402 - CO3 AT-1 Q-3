@@ -1,0 +1,38 @@
+# Q3: Data Reshaping - wide strain matrix to long (time-series) layout
+set.seed(42)
+sensors <- c("A", "B", "C", "D")
+wide <- data.frame(Time_Step = 1:3)
+for (s in sensors) {
+  k <- match(s, sensors)
+  wide[[paste0("Sensor", s, "_X")]]      <- round(10 * k + rnorm(3, 0, 0.2), 2)
+  wide[[paste0("Sensor", s, "_Y")]]      <- round(5 * k + rnorm(3, 0, 0.2), 2)
+  wide[[paste0("Sensor", s, "_Strain")]] <- round(100 + 20 * k + rnorm(3, 0, 3), 1)
+}
+cat("WIDE format (", nrow(wide), "rows x", ncol(wide), "columns):\n"); print(wide)
+
+long <- reshape(wide, direction = "long",
+                varying = list(paste0("Sensor", sensors, "_X"),
+                               paste0("Sensor", sensors, "_Y"),
+                               paste0("Sensor", sensors, "_Strain")),
+                v.names = c("X", "Y", "Strain"),
+                timevar = "Sensor", times = sensors,
+                idvar = "Time_Step")
+long <- long[order(long$Sensor, long$Time_Step), ]
+rownames(long) <- NULL
+cat("\nLONG format (", nrow(long), "rows x", ncol(long), "columns):\n"); print(long)
+
+# --- Integrity checks: every wide value must appear in the matching long row ---
+ok <- TRUE
+for (s in sensors) for (t in 1:3) {
+  row_long <- long[long$Sensor == s & long$Time_Step == t, ]
+  ok <- ok && row_long$X      == wide[wide$Time_Step == t, paste0("Sensor", s, "_X")] &&
+              row_long$Y      == wide[wide$Time_Step == t, paste0("Sensor", s, "_Y")] &&
+              row_long$Strain == wide[wide$Time_Step == t, paste0("Sensor", s, "_Strain")]
+}
+cat("\nRow count check (4 sensors x 3 time steps = 12):", nrow(long) == 12, "\n")
+cat("Value-by-value mapping preserved            :", ok, "\n")
+
+# --- Long format feeds a regression directly (one observation per row) ---
+model <- lm(Strain ~ X + Y, data = long)
+cat("\nSpatial regression on the long format (Strain ~ X + Y):\n")
+print(round(coef(summary(model)), 3))

@@ -1,0 +1,29 @@
+# Q7: Grade categorisation using nested if-else
+# (marks are stored in a vector so the script runs without typing input;
+#  for user input, use: marks <- as.numeric(readline("Enter marks: ")))
+marks_list <- c(95, 84, 72, 65, 52, 35, 120)
+
+for (marks in marks_list) {
+  if (marks >= 0 && marks <= 100) {
+    if (marks >= 90) {
+      grade <- "O (Outstanding)"
+    } else {
+      if (marks >= 80) {
+        grade <- "A (Excellent)"
+      } else {
+        if (marks >= 70) {
+          grade <- "B (Good)"
+        } else {
+          if (marks >= 50) {
+            grade <- "C (Average)"
+          } else {
+            grade <- "Fail"
+          }
+        }
+      }
+    }
+  } else {
+    grade <- "Invalid marks"
+  }
+  cat("Marks:", marks, "-> Grade:", grade, "\n")
+}
